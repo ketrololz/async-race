@@ -10,8 +10,10 @@ export class App extends BaseComponent<'div'> {
   constructor() {
     super({ tag: 'div', className: 'app' });
     this.body.appendChild(this.node);
-    const router = new Router(ROUTES, this);
+    const outlet = new BaseComponent({ tag: 'div', className: 'outlet' })
+    const router = new Router(ROUTES, outlet);
 
-    new Header(router, { parent: this } ) ;
+    new Header(router, { parent: this } );
+    this.appendChildren(outlet);
   }
 }

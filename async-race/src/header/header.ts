@@ -12,7 +12,10 @@ export class Header extends BaseComponent<'div'> {
     routes.forEach((route) => {
       const btn = new ButtonComponent({
         text: route.name,
-        onClick: () => router.navigate(route.path),
+        onClick: () => {
+          console.log(route.name, route.path);
+          router.navigate(route.path);
+        },
         className: 'nav-btn',
       });
 

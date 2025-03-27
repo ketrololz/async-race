@@ -6,9 +6,7 @@ export class ButtonComponent extends BaseComponent<'button'> {
     super({ tag: 'button', ...props })
 
     if (props.onClick) {
-      this.addListener('click', () => {
-        props.onClick;
-      })
+      this.addListener('click', props.onClick);
     }
   }
 }
