@@ -1,10 +1,10 @@
-import type { Element } from '../types/element';
+import type { Props } from '../types/props';
 
 export default class BaseComponent<T extends keyof HTMLElementTagNameMap> {
   protected _node: HTMLElementTagNameMap[T];
   protected _children: BaseComponent<T>[] = [];
 
-  constructor(props: Element<T>) {
+  constructor(props: Props<T>) {
     const node = document.createElement(props.tag);
     this._node = node;
 
