@@ -13,6 +13,10 @@ export default class Router {
     );
   }
 
+  get allRoutes(): Route[] {
+    return this.routes;
+  }
+
   public createPage(path: string): void {
     const route = this.routes.find((route) => route.path === path);
     if (route) {

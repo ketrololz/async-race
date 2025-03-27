@@ -3,6 +3,7 @@ import { Winners } from '../pages/winners/winners.ts';
 
 export const ROUTES = [
   {
+    name: 'Garage',
     path: '/',
     page: (): Promise<Garage> =>
       import('../pages/garage/garage.ts').then(
@@ -10,7 +11,8 @@ export const ROUTES = [
       ),
   },
   {
-    path: '/wheel',
+    name: 'Winners',
+    path: '/winners',
     page: (): Promise<Winners> =>
       import('../pages/winners/winners.ts').then((module) => new module.Winners()),
   },
