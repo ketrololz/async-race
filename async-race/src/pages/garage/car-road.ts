@@ -7,7 +7,6 @@ export class CarRoad extends BaseComponent<'div'> {
     super({ tag: 'div', className: 'car-road', ...props });
 
     const carOptionsButtonsContainer = new BaseComponent({
-      tag: 'div',
       className: 'car-options-btns-container',
       parent: this,
     });
@@ -34,7 +33,6 @@ export class CarRoad extends BaseComponent<'div'> {
     });
 
     const carControllerButtonsContainer = new BaseComponent({
-      tag: 'div',
       className: 'car-controller-btns-container',
       parent: this,
     });
@@ -54,25 +52,21 @@ export class CarRoad extends BaseComponent<'div'> {
     });
 
     const roadContainer = new BaseComponent({
-      tag: 'div',
       className: 'road-container',
       parent: this,
     });
 
     const carContainer = new BaseComponent({
-      tag: 'div',
       className: 'car-container',
       parent: roadContainer,
     });
 
     new BaseComponent({
-      tag: 'div',
       className: 'car',
       parent: carContainer,
     });
 
     new BaseComponent({
-      tag: 'div',
       className: 'road',
       parent: roadContainer,
     });
