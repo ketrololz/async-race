@@ -1,5 +1,5 @@
-import { Garage } from '../pages/garage/garage.ts';
-import { Winners } from '../pages/winners/winners.ts';
+import type { Garage } from '../pages/garage/garage.ts';
+import type { Winners } from '../pages/winners/winners.ts';
 
 export const ROUTES = [
   {

@@ -1,4 +1,4 @@
-import { ButtonProps } from "../types/button-props";
+import type { ButtonProps } from "../types/button-props";
 import BaseComponent from "../utils/base-component";
 
 export class ButtonComponent extends BaseComponent<'button'> {

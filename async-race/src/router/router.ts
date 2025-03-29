@@ -1,5 +1,5 @@
-import { Route } from '../types/route.ts';
-import BaseComponent from '../utils/base-component.ts';
+import type { Route } from '../types/route.ts';
+import type BaseComponent from '../utils/base-component.ts';
 
 export default class Router {
   constructor(private routes: Route[], private outlet: BaseComponent<'div'>) {
@@ -13,7 +13,7 @@ export default class Router {
     );
   }
 
-  get allRoutes(): Route[] {
+  public get allRoutes(): Route[] {
     return this.routes;
   }
 

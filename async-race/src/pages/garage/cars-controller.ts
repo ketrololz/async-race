@@ -2,7 +2,7 @@ import { BASE_URL } from '../../constants/app-settings';
 import { PATHS } from '../../constants/paths';
 
 class CarsController {
-  public async getCars() {
+  public async getCars(): Promise<void> {
     const response = await fetch(`${BASE_URL}${PATHS.garage}`);
     const cars = await response.json();
     console.log(cars);

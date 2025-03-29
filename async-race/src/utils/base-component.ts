@@ -1,15 +1,15 @@
-import { HtmlTags } from '../types/html-tags';
+import type { HtmlTags } from '../types/html-tags';
 import type { Props } from '../types/props';
 
 export default class BaseComponent<T extends HtmlTags> {
-  protected _node: HTMLElementTagNameMap[T];
+  protected _node: HTMLElementTagNameMap[T] | HTMLDivElement;
   protected _children: BaseComponent<HtmlTags>[] = [];
 
   constructor(props: Props<T> = {}) {
     const tag = props.tag ?? 'div';
 
-    const node = document.createElement(tag) as HTMLElementTagNameMap[T];
-
+    const node = document.createElement(tag);
+    
     this._node = node;
 
     if (props.className) {
@@ -25,19 +25,19 @@ export default class BaseComponent<T extends HtmlTags> {
     }
   }
 
+  public get node(): HTMLElementTagNameMap[T] | HTMLDivElement {
+    return this._node;
+  }
+
+  public set text(text: string) {
+    this._node.textContent = text;
+  }
+
   public appendChildren(...children: BaseComponent<HtmlTags>[]): void {
     children.forEach((child) => {
       this._node.appendChild(child.node);
       this._children.push(child);
     });
-  }
-
-  get node(): HTMLElementTagNameMap[T] {
-    return this._node;
-  }
-
-  set text(text: string) {
-    this._node.textContent = text;
   }
 
   public getChildren(): BaseComponent<HtmlTags>[] {

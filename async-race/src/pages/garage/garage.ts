@@ -8,6 +8,6 @@ export class Garage extends BaseComponent<'div'> {
       tag: 'div',
     });
 
-    new ButtonComponent({ text: 'garage', parent: this, onClick: () => carsController.getCars() });
+    new ButtonComponent({ text: 'garage', parent: this, onClick: (): Promise<void> => carsController.getCars() });
   }
 }
