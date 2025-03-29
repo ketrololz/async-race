@@ -13,7 +13,6 @@ export class Header extends BaseComponent<'div'> {
       const btn = new ButtonComponent({
         text: route.name,
         onClick: () => {
-          console.log(route.name, route.path);
           router.navigate(route.path);
         },
         className: 'nav-btn',
