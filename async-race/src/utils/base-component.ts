@@ -86,7 +86,7 @@ export default class BaseComponent<T extends HtmlTags> {
     this._node.remove();
   }
 
-  public sub(subscription: Subscription): void {
+  public subscribe(subscription: Subscription): void {
     this._subs.push(subscription);
   }
 

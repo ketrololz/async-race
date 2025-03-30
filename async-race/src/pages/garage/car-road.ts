@@ -1,13 +1,14 @@
 import { ButtonComponent } from '../../components/button-component';
-import type { Props } from '../../types/props';
+import type { Car } from '../../types/car';
 import BaseComponent from '../../utils/base-component';
 import { EventEmitter } from '../../utils/event-emitter';
 
 export class CarRoad extends BaseComponent<'div'> {
-  public delete = new EventEmitter<void>(); 
+  public delete = new EventEmitter<void>();
+  public select = new EventEmitter<void>();
 
-  constructor(props: Props<'div'> = {}) {
-    super({ tag: 'div', className: 'car-road', ...props });
+  constructor(private readonly car: Car) {
+    super({ tag: 'div', className: 'car-road' });
 
     const carOptionsButtonsContainer = new BaseComponent({
       className: 'car-options-btns-container',
@@ -18,23 +19,21 @@ export class CarRoad extends BaseComponent<'div'> {
       className: 'btn select-btn',
       parent: carOptionsButtonsContainer,
       text: 'select',
-      onClick: (): void => console.log('select'),
+      onClick: (): void => this.select.emit(),
     });
 
     new ButtonComponent({
       className: 'btn remove-btn',
       parent: carOptionsButtonsContainer,
       text: 'remove',
-      onClick: (): void => {
-        this.delete.emit();
-      },
+      onClick: (): void => this.delete.emit()
     });
 
     new BaseComponent({
       tag: 'h3',
       className: 'car-title',
       parent: carOptionsButtonsContainer,
-      text: 'car name',
+      text: car.name,
     });
 
     const carControllerButtonsContainer = new BaseComponent({
@@ -66,14 +65,20 @@ export class CarRoad extends BaseComponent<'div'> {
       parent: roadContainer,
     });
 
-    new BaseComponent({
+    const car2 = new BaseComponent({
       className: 'car',
       parent: carContainer,
     });
+
+    car2.node.style.backgroundColor = car.color;
 
     new BaseComponent({
       className: 'road',
       parent: roadContainer,
     });
+  }
+
+  public getCar(): Car {
+    return this.car;
   }
 }

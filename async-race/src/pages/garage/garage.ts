@@ -16,7 +16,10 @@ export class Garage extends BaseComponent<'div'> {
       parent: this,
     });
 
-    this.sub(options.add.subscribe((car) => this.carsFacade.createCar(car)));
+    this.subscribe(options.add.subscribe((car) => this.carsFacade.create(car)));
+    this.subscribe(
+      options.update.subscribe((car) => this.carsFacade.update(car)),
+    );
 
     const carsContainer = new BaseComponent({
       parent: this,
@@ -34,21 +37,24 @@ export class Garage extends BaseComponent<'div'> {
       // onClick: (): void => console.log(this.carsState.getCarStateById(2)),
     });
 
-    this.carsFacade.getCars();
+    this.carsFacade.get();
 
-    this.sub(
-      this.carsFacade.cars.subscribe((cars) => {
+    this.subscribe(
+      this.carsFacade.carList.subscribe((cars) => {
         this._cars.forEach((car) => car.destroyNode());
 
         cars.forEach((car) => {
-          const carRoad = new CarRoad({
-            parent: carsContainer,
-            text: car.name,
-          });
-
-          this.sub(
+          const carRoad = new CarRoad(car);
+          carsContainer.appendChildren(carRoad);
+          this.subscribe(
             carRoad.delete.subscribe(() => {
-              this.carsFacade.removeCar(car);
+              this.carsFacade.remove(car);
+            }),
+          );
+
+          this.subscribe(
+            carRoad.select.subscribe(() => {
+              options.setSelected(carRoad.getCar());
             }),
           );
 

@@ -3,33 +3,45 @@ import { CarsApiService } from '../pages/garage/cars-api-service';
 import type { Car } from '../types/car';
 
 export class CarsFacade {
-  public cars = new Observable<Car[]>([]);
+  public carList = new Observable<Car[]>([]);
   private carsApiService = new CarsApiService();
 
-  // public getCarById(id: number): Car | undefined {
-  //   return this.cars.value.find((car) => car.id === id);
-  // }
-
-  public async getCars(): Promise<void> {
-    const allCars = await this.carsApiService.getCars();
-    this.cars.update((cars) => cars.concat(allCars));
+  public async get(): Promise<void> {
+    const allCarList = await this.carsApiService.get();
+    this.carList.update((cars) => cars.concat(allCarList));
   }
 
-  public async removeCar(car: Car): Promise<void> {
+  public async remove(car: Car): Promise<void> {
     try {
-      await this.carsApiService.removeCar(car);
-      this.cars.update((cars) => cars.filter((elem) => elem.id !== car.id));
-      console.log(this.cars);
+      await this.carsApiService.remove(car);
+      this.carList.update((cars) => cars.filter((elem) => elem.id !== car.id));
+      console.log(this.carList);
     } catch (e) {
       console.warn(e);
     }
   }
 
-  public async createCar(params: {
+  public async create(params: {
     name: string;
     color: string;
   }): Promise<void> {
-    const newCar = await this.carsApiService.addCar(params);
-    this.cars.update((cars) => cars.concat(newCar));
+    const newCar = await this.carsApiService.add(params);
+    this.carList.update((cars) => cars.concat(newCar));
+  }
+
+  public async update(car: Car): Promise<void> {
+    try {
+      await this.carsApiService.update(car);
+      this.carList.update((cars) =>
+        cars.map((elem) => {
+          if (car.id === elem.id) {
+            elem = car;
+          }
+          return elem;
+        }),
+      );
+    } catch (e) {
+      console.warn(e);
+    }
   }
 }
