@@ -2,8 +2,11 @@ import { ButtonComponent } from '../../components/button-component';
 import { InputComponent } from '../../components/input-component';
 import type { Props } from '../../types/props';
 import BaseComponent from '../../utils/base-component';
+import { CarsApiService } from './cars-api-service';
 
 export class CarsOptions extends BaseComponent<'div'> {
+  // private api = new CarsApiService();
+
   constructor(props: Props<'div'> = {}) {
     super({ className: 'car-road', ...props });
 
@@ -32,6 +35,7 @@ export class CarsOptions extends BaseComponent<'div'> {
       className: 'btn',
       text: 'add car',
       parent: newCarContainer,
+      // onClick: (): Promise<void> => this.api.addCar({ name: 'test', color: '#ffffff'})
     });
 
     const updateCarContainer = new BaseComponent({

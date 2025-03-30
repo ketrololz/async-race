@@ -1,12 +1,13 @@
 import { ButtonComponent } from '../../components/button-component';
-import type { Car } from '../../types/car';
 import BaseComponent from '../../utils/base-component';
 import { CarRoad } from './car-road';
-import { carsController } from './cars-controller';
 import '../garage/garage.scss';
 import { CarsOptions } from './cars-options';
+import { CarsState } from '../../state/cars-state';
 
 export class Garage extends BaseComponent<'div'> {
+  private carsState = new CarsState();
+
   constructor() {
     super();
 
@@ -14,12 +15,33 @@ export class Garage extends BaseComponent<'div'> {
       parent: this,
     });
 
-    new ButtonComponent({
-      text: 'garage',
+    const carsContainer = new BaseComponent({
       parent: this,
-      onClick: (): Promise<Car | undefined> => carsController.getCarById(0),
     });
-    
-    new CarRoad({ parent: this });
+
+    new ButtonComponent({
+      text: 'prev',
+      parent: this,
+      // onClick: (): void => console.log(this.carsState.getCarStateById(1)),
+    });
+
+    new ButtonComponent({
+      text: 'next',
+      parent: this,
+      // onClick: (): void => console.log(this.carsState.getCarStateById(2)),
+    });
+
+    this.carsState.getCars();
+
+    this.sub(
+      this.carsState.cars.subscribe((cars) => {
+        cars.forEach((car) => {
+          console.log(car);
+          new CarRoad({ parent: carsContainer, text: car.name });
+        });
+      }),
+    );
   }
+
+  // private nextPage(): void {}
 }

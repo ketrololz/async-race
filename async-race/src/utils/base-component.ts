@@ -1,15 +1,18 @@
 import type { HtmlTags } from '../types/html-tags';
 import type { Props } from '../types/props';
 
+type Subscription = () => void;
+
 export default class BaseComponent<T extends HtmlTags> {
   protected _node: HTMLElementTagNameMap[T] | HTMLDivElement;
   protected _children: BaseComponent<HtmlTags>[] = [];
+  protected _subs: Subscription[] = [];
 
   constructor(props: Props<T> = {}) {
     const tag = props.tag ?? 'div';
 
     const node = document.createElement(tag);
-    
+
     this._node = node;
 
     if (props.className) {
@@ -79,6 +82,15 @@ export default class BaseComponent<T extends HtmlTags> {
 
   public destroyNode(): void {
     this.destroyChildren();
+    this.unsubscribeAll();
     this._node.remove();
+  }
+
+  public sub(subscription: Subscription): void {
+    this._subs.push(subscription);
+  }
+
+  public unsubscribeAll(): void {
+    this._subs.forEach((sub) => sub());
   }
 }
