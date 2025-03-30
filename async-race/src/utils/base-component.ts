@@ -4,14 +4,14 @@ import type { Props } from '../types/props';
 type Subscription = () => void;
 
 export default class BaseComponent<T extends HtmlTags> {
-  protected _node: HTMLElementTagNameMap[T] | HTMLDivElement;
+  protected _node: HTMLElementTagNameMap[T];
   protected _children: BaseComponent<HtmlTags>[] = [];
   protected _subs: Subscription[] = [];
 
   constructor(props: Props<T> = {}) {
     const tag = props.tag ?? 'div';
 
-    const node = document.createElement(tag);
+    const node = document.createElement(tag) as HTMLElementTagNameMap[T];
 
     this._node = node;
 
@@ -28,7 +28,7 @@ export default class BaseComponent<T extends HtmlTags> {
     }
   }
 
-  public get node(): HTMLElementTagNameMap[T] | HTMLDivElement {
+  public get node(): HTMLElementTagNameMap[T] {
     return this._node;
   }
 

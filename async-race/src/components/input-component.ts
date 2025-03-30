@@ -25,4 +25,8 @@ export class InputComponent extends BaseComponent<'input'> {
       this.setAttribute('placeholder', props.placeholder );
     }
   }
+
+  public get value(): string {
+    return this.node.value;
+  }
 }

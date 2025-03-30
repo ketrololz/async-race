@@ -3,17 +3,20 @@ import BaseComponent from '../../utils/base-component';
 import { CarRoad } from './car-road';
 import '../garage/garage.scss';
 import { CarsOptions } from './cars-options';
-import { CarsState } from '../../state/cars-state';
+import { CarsFacade } from '../../state/cars-facade';
 
 export class Garage extends BaseComponent<'div'> {
-  private carsState = new CarsState();
+  private readonly carsFacade = new CarsFacade();
+  private readonly _cars: CarRoad[] = [];
 
   constructor() {
     super();
 
-    new CarsOptions({
+    const options = new CarsOptions({
       parent: this,
     });
+
+    this.sub(options.add.subscribe((car) => this.carsFacade.createCar(car)));
 
     const carsContainer = new BaseComponent({
       parent: this,
@@ -31,13 +34,25 @@ export class Garage extends BaseComponent<'div'> {
       // onClick: (): void => console.log(this.carsState.getCarStateById(2)),
     });
 
-    this.carsState.getCars();
+    this.carsFacade.getCars();
 
     this.sub(
-      this.carsState.cars.subscribe((cars) => {
+      this.carsFacade.cars.subscribe((cars) => {
+        this._cars.forEach((car) => car.destroyNode());
+
         cars.forEach((car) => {
-          console.log(car);
-          new CarRoad({ parent: carsContainer, text: car.name });
+          const carRoad = new CarRoad({
+            parent: carsContainer,
+            text: car.name,
+          });
+
+          this.sub(
+            carRoad.delete.subscribe(() => {
+              this.carsFacade.removeCar(car);
+            }),
+          );
+
+          this._cars.push(carRoad);
         });
       }),
     );

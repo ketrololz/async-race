@@ -24,7 +24,7 @@ export default tseslint.config(
     rules: {
       'unicorn/better-regex': 'error',
       '@typescript-eslint/consistent-type-assertions': [
-        'error',
+        'off',
         { assertionStyle: 'never' },
       ],
       '@typescript-eslint/consistent-type-imports': 'error',

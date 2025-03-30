@@ -1,8 +1,11 @@
 import { ButtonComponent } from '../../components/button-component';
 import type { Props } from '../../types/props';
 import BaseComponent from '../../utils/base-component';
+import { EventEmitter } from '../../utils/event-emitter';
 
 export class CarRoad extends BaseComponent<'div'> {
+  public delete = new EventEmitter<void>(); 
+
   constructor(props: Props<'div'> = {}) {
     super({ tag: 'div', className: 'car-road', ...props });
 
@@ -22,7 +25,9 @@ export class CarRoad extends BaseComponent<'div'> {
       className: 'btn remove-btn',
       parent: carOptionsButtonsContainer,
       text: 'remove',
-      onClick: (): void => console.log('remove'),
+      onClick: (): void => {
+        this.delete.emit();
+      },
     });
 
     new BaseComponent({

@@ -6,25 +6,28 @@ export class CarsApiService {
   public async getCars(): Promise<Car[]> {
     const response = await fetch(`${BASE_URL}${PATHS.garage}`);
     const cars = await response.json();
-    console.log(cars);
     return cars;
   }
 
   public async getCarById(id: number): Promise<Car | undefined> {
     const cars = await this.getCars();
-    console.log(cars[id]);
     return cars.find((car) => car.id === id);
   }
 
-  public async addCar(params: { name: string, color: string }): Promise<void> {
+  public async addCar(params: Omit<Car, 'id'>): Promise<Car> {
     const response = await fetch(`${BASE_URL}${PATHS.garage}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(params)
+      body: JSON.stringify(params),
     });
-    const car = await response.json();
-    console.log(car);
+    return await response.json();
+  }
+
+  public async removeCar(car: Car): Promise<void> {
+    await fetch(`${BASE_URL}${PATHS.garage}/${car.id}`, {
+      method: 'delete',
+    });
   }
 }

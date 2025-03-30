@@ -1,11 +1,13 @@
 import { ButtonComponent } from '../../components/button-component';
 import { InputComponent } from '../../components/input-component';
+import type { Car } from '../../types/car';
 import type { Props } from '../../types/props';
 import BaseComponent from '../../utils/base-component';
-import { CarsApiService } from './cars-api-service';
+import { EventEmitter } from '../../utils/event-emitter';
 
 export class CarsOptions extends BaseComponent<'div'> {
-  // private api = new CarsApiService();
+  public readonly add = new EventEmitter<Omit<Car, 'id'>>();
+  public readonly update = new EventEmitter<Car>();
 
   constructor(props: Props<'div'> = {}) {
     super({ className: 'car-road', ...props });
@@ -20,12 +22,12 @@ export class CarsOptions extends BaseComponent<'div'> {
       parent: optionsContainer,
     });
 
-    new InputComponent({
+    const name = new InputComponent({
       parent: newCarContainer,
       placeholder: 'car name',
     });
 
-    new InputComponent({
+    const color = new InputComponent({
       parent: newCarContainer,
       onChange: (data): void => console.log(data),
       type: 'color',
@@ -35,7 +37,8 @@ export class CarsOptions extends BaseComponent<'div'> {
       className: 'btn',
       text: 'add car',
       parent: newCarContainer,
-      // onClick: (): Promise<void> => this.api.addCar({ name: 'test', color: '#ffffff'})
+      onClick: (): void =>
+        this.add.emit({ name: name.value, color: color.value }),
     });
 
     const updateCarContainer = new BaseComponent({
