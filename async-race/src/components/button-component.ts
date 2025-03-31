@@ -9,4 +9,12 @@ export class ButtonComponent extends BaseComponent<'button'> {
       this.addListener('click', props.onClick);
     }
   }
+
+  public disable(): void {
+    this.node.disabled = true;
+  }
+
+  public enable(): void {
+    this.node.disabled = false;
+  }
 }

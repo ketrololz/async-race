@@ -1,15 +1,13 @@
-import { ButtonComponent } from '../../components/button-component';
-import { InputComponent } from '../../components/input-component';
-import type { Car } from '../../types/car';
 import type { Props } from '../../types/props';
 import BaseComponent from '../../utils/base-component';
-import { EventEmitter } from '../../utils/event-emitter';
+import { CarCreator } from './car-creator';
+import { CarUpdater } from './car-updater';
+import { carsFacade } from '../../state/cars-facade';
 
 export class CarsOptions extends BaseComponent<'div'> {
-  public readonly add = new EventEmitter<Omit<Car, 'id'>>();
-  public readonly update = new EventEmitter<Car>();
-  private selected: Car | null = null;
-  private nameInput: InputComponent = <InputComponent>{};
+  public readonly creator = <CarCreator>{};
+  public readonly updater = <CarUpdater>{};
+  private readonly carsFacade = carsFacade;
 
   constructor(props: Props<'div'> = {}) {
     super({ className: 'car-road', ...props });
@@ -19,66 +17,19 @@ export class CarsOptions extends BaseComponent<'div'> {
       parent: this,
     });
 
-    const newCarContainer = new BaseComponent({
-      className: 'options-container',
-      parent: optionsContainer,
-    });
+    this.creator = new CarCreator({ parent: optionsContainer });
+    this.updater = new CarUpdater({ parent: optionsContainer });
 
-    const name = new InputComponent({
-      parent: newCarContainer,
-      placeholder: 'car name',
-    });
+    this.subscribe(
+      this.creator.add.subscribe((car) => {
+        this.carsFacade.create(car);
+      }),
+    );
 
-    const color = new InputComponent({
-      parent: newCarContainer,
-      onChange: (data): void => console.log(data),
-      type: 'color',
-    });
-
-    new ButtonComponent({
-      className: 'btn',
-      text: 'add car',
-      parent: newCarContainer,
-      onClick: (): void =>
-        this.add.emit({ name: name.value, color: color.value }),
-    });
-
-    const carUpdaterContainer = new BaseComponent({
-      className: 'options-container',
-      parent: optionsContainer,
-    });
-
-    const nameUpdater = new InputComponent({
-      parent: carUpdaterContainer,
-      placeholder: 'car name',
-    });
-
-    this.nameInput = nameUpdater;
-
-    const colorUpdater = new InputComponent({
-      parent: carUpdaterContainer,
-      onChange: (data): void => console.log(data),
-      type: 'color',
-    });
-
-    new ButtonComponent({
-      className: 'btn',
-      text: 'update car',
-      parent: carUpdaterContainer,
-      onClick: (): void => {
-        if (this.selected) {
-          this.update.emit({
-            id: this.selected?.id,
-            name: nameUpdater.value,
-            color: colorUpdater.value,
-          });
-        }
-      },
-    });
-  }
-
-  public setSelected(car: Car): void {
-    this.selected = car;
-    this.nameInput.node.value = car.name;
+    this.subscribe(
+      this.updater.change.subscribe((car) => {
+        this.carsFacade.update(car);
+      }),
+    );
   }
 }

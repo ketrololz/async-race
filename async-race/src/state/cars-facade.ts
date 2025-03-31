@@ -2,7 +2,7 @@ import { Observable } from '../utils/observable';
 import { CarsApiService } from '../pages/garage/cars-api-service';
 import type { Car } from '../types/car';
 
-export class CarsFacade {
+class CarsFacade {
   public carList = new Observable<Car[]>([]);
   private carsApiService = new CarsApiService();
 
@@ -45,3 +45,5 @@ export class CarsFacade {
     }
   }
 }
+
+export const carsFacade = new CarsFacade();
