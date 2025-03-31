@@ -35,6 +35,8 @@ export class Garage extends BaseComponent<'div'> {
 
     this.carsFacade.get();
 
+    console.log(this)
+
     this.renderRoads(options, carsContainer);
   }
 

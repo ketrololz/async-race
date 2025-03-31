@@ -42,7 +42,7 @@ export class CarCreator extends BaseComponent<'div'> {
     this.creatorButton.disable();
   }
 
-  private create(car: Omit<Car, 'id'>): void {
+  protected create(car: Omit<Car, 'id'>): void {
     this.add.emit(car);
     this.name.value = '';
     this.color.value = DEFAULT_COLOR;
