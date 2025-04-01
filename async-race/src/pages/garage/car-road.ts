@@ -1,5 +1,5 @@
 import { ButtonComponent } from '../../components/button-component';
-import type { Car } from '../../types/car';
+import type { Car } from '../../components/car';
 import BaseComponent from '../../utils/base-component';
 import { EventEmitter } from '../../utils/event-emitter';
 
@@ -26,7 +26,7 @@ export class CarRoad extends BaseComponent<'div'> {
       className: 'btn remove-btn',
       parent: carOptionsButtonsContainer,
       text: 'remove',
-      onClick: (): void => this.delete.emit()
+      onClick: (): void => this.delete.emit(),
     });
 
     new BaseComponent({

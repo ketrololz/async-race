@@ -10,6 +10,7 @@ export class Garage extends BaseComponent<'div'> {
   private readonly carsFacade = carsFacade;
   private readonly _cars: CarRoad[] = [];
   private title: BaseComponent<HtmlTags>;
+  private subtitle: BaseComponent<HtmlTags>;
 
   constructor() {
     super();
@@ -17,6 +18,11 @@ export class Garage extends BaseComponent<'div'> {
     this.title = new BaseComponent({
       parent: this,
       text: `Garage(0)`,
+    });
+
+    this.subtitle = new BaseComponent({
+      parent: this,
+      text: `Page 1`,
     });
 
     const options = new CarsOptions({
@@ -41,7 +47,7 @@ export class Garage extends BaseComponent<'div'> {
         this.carsFacade.setPage(this.carsFacade.page + 1),
     });
 
-    this.carsFacade.get();
+    this.carsFacade.setPage(this.carsFacade.page);
 
     this.renderRoads(options, carsContainer);
   }
@@ -53,7 +59,8 @@ export class Garage extends BaseComponent<'div'> {
     this.subscribe(
       this.carsFacade.carList.subscribe((cars) => {
         this._cars.forEach((car) => car.destroyNode());
-        this.title.text = `Garage(${cars.length})`;
+        this.title.text = `Garage(${this.carsFacade.totalCount})`;
+        this.subtitle.text = `Page ${this.carsFacade.page} `;
 
         cars.forEach((car) => {
           const carRoad = new CarRoad(car);

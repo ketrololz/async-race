@@ -1,7 +1,7 @@
 import { ButtonComponent } from '../../components/button-component';
 import { InputComponent } from '../../components/input-component';
 import { DEFAULT_COLOR } from '../../constants/app-settings';
-import type { Car } from '../../types/car';
+import type { Car } from '../../components/car';
 import type { Props } from '../../types/props';
 import BaseComponent from '../../utils/base-component';
 import { EventEmitter } from '../../utils/event-emitter';

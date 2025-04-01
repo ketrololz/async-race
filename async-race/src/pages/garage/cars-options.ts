@@ -21,7 +21,7 @@ export class CarsOptions extends BaseComponent<'div'> {
 
     this.creator = new CarCreator({ parent: optionsContainer });
     this.updater = new CarUpdater({ parent: optionsContainer });
-    this.generator = new CarsGenerator({ parent: optionsContainer })
+    this.generator = new CarsGenerator({ parent: optionsContainer });
 
     this.subscribe(
       this.creator.add.subscribe((car) => {

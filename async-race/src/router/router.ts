@@ -2,7 +2,10 @@ import type { Route } from '../types/route.ts';
 import type BaseComponent from '../utils/base-component.ts';
 
 export default class Router {
-  constructor(private routes: Route[], private outlet: BaseComponent<'div'>) {
+  constructor(
+    private routes: Route[],
+    private outlet: BaseComponent<'div'>,
+  ) {
     this.routes = routes;
     this.outlet = outlet;
 
@@ -21,9 +24,7 @@ export default class Router {
     const route = this.routes.find((route) => route.path === path);
     if (route) {
       this.outlet.destroyChildren();
-      route
-        .page(this)
-        .then((page) => this.outlet.appendChildren(page));
+      route.page(this).then((page) => this.outlet.appendChildren(page));
     }
   }
 

@@ -1,10 +1,11 @@
 import { ButtonComponent } from '../../components/button-component';
 import { GENERATE_CARS_COUNT } from '../../constants/app-settings';
 import { carModels } from '../../constants/cars';
-import type { Car } from '../../types/car';
+import type { Car } from '../../components/car';
 import type { Props } from '../../types/props';
 import BaseComponent from '../../utils/base-component';
 import { EventEmitter } from '../../utils/event-emitter';
+import { RGB_COLORS } from '../../constants/rgb-colors';
 
 export class CarsGenerator extends BaseComponent<'div'> {
   public readonly add = new EventEmitter<Omit<Car, 'id'>>();
@@ -47,7 +48,7 @@ export class CarsGenerator extends BaseComponent<'div'> {
   }
 
   private randomColor(): string {
-    return `#${Math.floor(Math.random() * (256 * 256 * 256))
+    return `#${Math.floor(Math.random() * RGB_COLORS)
       .toString(16)
       .padStart(6, '0')}`;
   }

@@ -1,8 +1,8 @@
-import Router from "./router/router";
-import { ROUTES } from "./router/routes";
-import BaseComponent from "./utils/base-component";
+import Router from './router/router';
+import { ROUTES } from './router/routes';
+import BaseComponent from './utils/base-component';
 import './styles/style.scss';
-import { Header } from "./header/header";
+import { Header } from './header/header';
 
 export class App extends BaseComponent<'div'> {
   private readonly body = document.body;
@@ -10,10 +10,10 @@ export class App extends BaseComponent<'div'> {
   constructor() {
     super({ tag: 'div', className: 'app' });
     this.body.appendChild(this.node);
-    const outlet = new BaseComponent({ tag: 'div', className: 'outlet' })
+    const outlet = new BaseComponent({ tag: 'div', className: 'outlet' });
     const router = new Router(ROUTES, outlet);
 
-    new Header(router, { parent: this } );
+    new Header(router, { parent: this });
     this.appendChildren(outlet);
   }
 }

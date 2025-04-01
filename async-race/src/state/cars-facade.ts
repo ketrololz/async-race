@@ -1,6 +1,6 @@
 import { Observable } from '../utils/observable';
 import { CarsApiService } from '../services/cars-api-service';
-import type { Car } from '../types/car';
+import type { Car } from '../components/car';
 import { CARS_PER_PAGE } from '../constants/app-settings';
 
 class CarsFacade {
@@ -8,30 +8,33 @@ class CarsFacade {
   private carsApiService = new CarsApiService();
   private _page = 1;
 
-  public get page(): number {
-    return this._page;
+  public get totalCount(): string {
+    return this.carsApiService.totalCars;
   }
 
-  public async get(): Promise<void> {
-    const allCarList = await this.carsApiService.get();
-    this.carList.set(allCarList);
+  public get page(): number {
+    return this._page;
   }
 
   public async remove(car: Car): Promise<void> {
     try {
       await this.carsApiService.remove(car);
       this.carList.update((cars) => cars.filter((elem) => elem.id !== car.id));
+
+      if(this.carList.value.length < 1 && this._page !== 1) {
+        this._page -= 1;
+      }
+
       this.setPage(this._page);
+      
     } catch (e) {
       console.warn(e);
     }
   }
 
   public async create(params: { name: string; color: string }): Promise<void> {
-    const car = await this.carsApiService.add(params);
-    if (this.carList.value.length < CARS_PER_PAGE) {
-      this.carList.update((cars) => cars.concat(car));
-    }
+    await this.carsApiService.add(params);
+    this.setPage(this._page);
   }
 
   public async update(car: Car): Promise<void> {
@@ -50,9 +53,11 @@ class CarsFacade {
     }
   }
 
-  public async setPage(page: number): Promise<void> {
-    if (page > 0) {
-      const cars = await this.carsApiService.setPage(page);
+  public async setPage(page: number = 1): Promise<void> {
+    const totalPages = Math.ceil(Number(this.totalCount) / CARS_PER_PAGE) || 1;
+    console.log(totalPages);
+    if (page > 0 && page <= totalPages) {
+      const cars = await this.carsApiService.get(page);
       this._page = page;
       this.carList.set(cars);
     }
