@@ -9,9 +9,15 @@ import type { HtmlTags } from '../../types/html-tags';
 export class Garage extends BaseComponent<'div'> {
   private readonly carsFacade = carsFacade;
   private readonly _cars: CarRoad[] = [];
+  private title: BaseComponent<HtmlTags>;
 
   constructor() {
     super();
+
+    this.title = new BaseComponent({
+      parent: this,
+      text: `Garage(0)`,
+    });
 
     const options = new CarsOptions({
       parent: this,
@@ -24,26 +30,30 @@ export class Garage extends BaseComponent<'div'> {
     new ButtonComponent({
       text: 'prev',
       parent: this,
-      // onClick: (): void => console.log(this.carsState.getCarStateById(1)),
+      onClick: (): Promise<void> =>
+        this.carsFacade.setPage(this.carsFacade.page - 1),
     });
 
     new ButtonComponent({
       text: 'next',
       parent: this,
-      // onClick: (): void => console.log(this.carsState.getCarStateById(2)),
+      onClick: (): Promise<void> =>
+        this.carsFacade.setPage(this.carsFacade.page + 1),
     });
 
     this.carsFacade.get();
 
-    console.log(this)
-
     this.renderRoads(options, carsContainer);
   }
 
-  private renderRoads(options: CarsOptions, parent: BaseComponent<HtmlTags>): void {
+  private renderRoads(
+    options: CarsOptions,
+    parent: BaseComponent<HtmlTags>,
+  ): void {
     this.subscribe(
       this.carsFacade.carList.subscribe((cars) => {
         this._cars.forEach((car) => car.destroyNode());
+        this.title.text = `Garage(${cars.length})`;
 
         cars.forEach((car) => {
           const carRoad = new CarRoad(car);

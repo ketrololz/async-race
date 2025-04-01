@@ -82,8 +82,6 @@ export const carModels: Record<string, string[]> = {
     'Leaf',
   ],
   Mazda: [
-    'Mazda3',
-    'Mazda6',
     'CX-3',
     'CX-5',
     'CX-9',

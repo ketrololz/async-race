@@ -8,9 +8,9 @@ import { EventEmitter } from '../../utils/event-emitter';
 
 export class CarCreator extends BaseComponent<'div'> {
   public readonly add = new EventEmitter<Omit<Car, 'id'>>();
-  private creatorButton = <ButtonComponent>{};
-  private name = <InputComponent>{};
-  private color = <InputComponent>{};
+  private creatorButton: ButtonComponent;
+  private name: InputComponent;
+  private color: InputComponent;
 
   constructor(props: Props<'div'> = {}) {
     super({ className: 'car-creator', ...props });

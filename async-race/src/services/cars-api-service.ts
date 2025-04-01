@@ -1,17 +1,14 @@
-import { BASE_URL } from '../../constants/app-settings';
-import { PATHS } from '../../constants/paths';
-import type { Car } from '../../types/car';
+import { BASE_URL, CARS_PER_PAGE } from '../constants/app-settings';
+import { PATHS } from '../constants/paths';
+import type { Car } from '../types/car';
 
 export class CarsApiService {
   public async get(): Promise<Car[]> {
-    const response = await fetch(`${BASE_URL}${PATHS.garage}`);
+    const response = await fetch(
+      `${BASE_URL}${PATHS.garage}?_page=${1}&_limit=${CARS_PER_PAGE}`,
+    );
     const cars = await response.json();
     return cars;
-  }
-
-  public async getById(id: number): Promise<Car | undefined> {
-    const cars = await this.get();
-    return cars.find((car) => car.id === id);
   }
 
   public async add(params: Omit<Car, 'id'>): Promise<Car> {
@@ -39,5 +36,13 @@ export class CarsApiService {
       },
       body: JSON.stringify({ name: car.name, color: car.color }),
     });
+  }
+
+  public async setPage(page: number): Promise<Car[]> {
+    const response = await fetch(
+      `${BASE_URL}${PATHS.garage}?_page=${page}&_limit=${CARS_PER_PAGE}`,
+    );
+    const cars = await response.json();
+    return cars;
   }
 }

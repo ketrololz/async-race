@@ -3,12 +3,12 @@ import BaseComponent from '../../utils/base-component';
 import { CarCreator } from './car-creator';
 import { CarUpdater } from './car-updater';
 import { carsFacade } from '../../state/cars-facade';
-import { CarsGenerator } from './cars-genertor';
+import { CarsGenerator } from './cars-generator';
 
 export class CarsOptions extends BaseComponent<'div'> {
-  public readonly creator = <CarCreator>{};
-  public readonly updater = <CarUpdater>{};
-  public readonly generator = <CarsGenerator>{};
+  public readonly creator: CarCreator;
+  public readonly updater: CarUpdater;
+  public readonly generator: CarsGenerator;
   private readonly carsFacade = carsFacade;
 
   constructor(props: Props<'div'> = {}) {
