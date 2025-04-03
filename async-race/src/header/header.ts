@@ -1,7 +1,7 @@
 import { ButtonComponent } from '../components/button-component';
 import type Router from '../router/router';
 import type { Props } from '../types/props';
-import BaseComponent from '../utils/base-component';
+import BaseComponent from '../components/base-component';
 
 export class Header extends BaseComponent<'div'> {
   constructor(router: Router, props: Props<'div'>) {

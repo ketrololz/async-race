@@ -1,5 +1,5 @@
 import type { Props } from '../../types/props';
-import BaseComponent from '../../utils/base-component';
+import BaseComponent from '../../components/base-component';
 import { CarCreator } from './car-creator';
 import { CarUpdater } from './car-updater';
 import { carsFacade } from '../../state/cars-facade';

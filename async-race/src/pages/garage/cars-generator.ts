@@ -3,7 +3,7 @@ import { GENERATE_CARS_COUNT } from '../../constants/app-settings';
 import { carModels } from '../../constants/cars';
 import type { Car } from '../../components/car';
 import type { Props } from '../../types/props';
-import BaseComponent from '../../utils/base-component';
+import BaseComponent from '../../components/base-component';
 import { EventEmitter } from '../../utils/event-emitter';
 import { RGB_COLORS } from '../../constants/rgb-colors';
 

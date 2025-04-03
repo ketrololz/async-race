@@ -3,7 +3,7 @@ import { InputComponent } from '../../components/input-component';
 import { DEFAULT_COLOR } from '../../constants/app-settings';
 import type { Car } from '../../components/car';
 import type { Props } from '../../types/props';
-import BaseComponent from '../../utils/base-component';
+import BaseComponent from '../../components/base-component';
 import { EventEmitter } from '../../utils/event-emitter';
 
 export class CarCreator extends BaseComponent<'div'> {

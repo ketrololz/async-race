@@ -1,4 +1,4 @@
-import type BaseComponent from '../utils/base-component';
+import type BaseComponent from '../components/base-component';
 import type { HtmlTags } from './html-tags';
 
 export type Props<

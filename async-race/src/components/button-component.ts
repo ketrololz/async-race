@@ -1,5 +1,5 @@
 import type { ButtonProps } from '../types/button-props';
-import BaseComponent from '../utils/base-component';
+import BaseComponent from './base-component';
 
 export class ButtonComponent extends BaseComponent<'button'> {
   constructor(props: ButtonProps<'button'> = {}) {

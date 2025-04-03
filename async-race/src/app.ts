@@ -1,6 +1,6 @@
 import Router from './router/router';
 import { ROUTES } from './router/routes';
-import BaseComponent from './utils/base-component';
+import BaseComponent from './components/base-component';
 import './styles/style.scss';
 import { Header } from './header/header';
 

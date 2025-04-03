@@ -40,6 +40,9 @@
 }
 
 .car {
+  position: absolute;
+  top: 0;
+  left: 0;
   background-color: $red;
   height: 30px;
   width: 70px;
@@ -47,6 +50,7 @@
 }
 
 .road {
-  height: 2px;
+  position: relative;
+  height: 30px;
   border-bottom: dashed 2px $white;
 }

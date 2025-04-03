@@ -1,5 +1,5 @@
 import { ButtonComponent } from '../../components/button-component';
-import BaseComponent from '../../utils/base-component';
+import BaseComponent from '../../components/base-component';
 import { CarRoad } from './car-road';
 import '../garage/garage.scss';
 import { CarsOptions } from './cars-options';
@@ -96,8 +96,9 @@ export class Garage extends BaseComponent<'div'> {
 
   private subscribeStartButtons(road: CarRoad): void {
     this.subscribe(
-      road.start.subscribe(() => {
-        this.carsFacade.startEngine(road.getCar());
+      road.start.subscribe(async () => {
+        const speed = await this.carsFacade.startEngine(road.getCar());
+        road.getCarElement().animateCar(speed);
       }),
     );
   }
@@ -106,6 +107,7 @@ export class Garage extends BaseComponent<'div'> {
     this.subscribe(
       road.stop.subscribe(() => {
         this.carsFacade.stopEngine(road.getCar());
+        road.getCarElement().stopAnimation();
       }),
     );
   }

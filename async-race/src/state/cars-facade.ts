@@ -63,8 +63,10 @@ class CarsFacade {
     }
   }
 
-  public async startEngine(car: Car): Promise<void> {
-    await this.engineApiService.start(car.id);
+  public async startEngine(car: Car): Promise<number> {
+    const response = await this.engineApiService.start(car.id);
+    const time = response.distance / response.velocity
+    return time;
   }
 
   public async stopEngine(car: Car): Promise<void> {

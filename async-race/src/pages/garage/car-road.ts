@@ -1,13 +1,15 @@
 import { ButtonComponent } from '../../components/button-component';
 import type { Car } from '../../components/car';
-import BaseComponent from '../../utils/base-component';
+import BaseComponent from '../../components/base-component';
 import { EventEmitter } from '../../utils/event-emitter';
+import { CarComponent } from '../../components/car-component';
 
 export class CarRoad extends BaseComponent<'div'> {
   public delete = new EventEmitter<void>();
   public select = new EventEmitter<void>();
   public start = new EventEmitter<void>();
   public stop = new EventEmitter<void>();
+  private carElement: CarComponent;
 
   constructor(private readonly car: Car) {
     super({ tag: 'div', className: 'car-road' });
@@ -67,12 +69,11 @@ export class CarRoad extends BaseComponent<'div'> {
       parent: roadContainer,
     });
 
-    const car2 = new BaseComponent({
+    this.carElement = new CarComponent({
       className: 'car',
       parent: carContainer,
+      color: car.color,
     });
-
-    car2.node.style.backgroundColor = car.color;
 
     new BaseComponent({
       className: 'road',
@@ -82,5 +83,9 @@ export class CarRoad extends BaseComponent<'div'> {
 
   public getCar(): Car {
     return this.car;
+  }
+
+  public getCarElement(): CarComponent {
+    return this.carElement;
   }
 }

@@ -4,7 +4,7 @@ import { PATHS } from '../constants/paths';
 export class EngineApiService {
   private readonly baseUrl = `${BASE_URL}${PATHS.engine}`;
 
-  public async start(id: number): Promise<void> {
+  public async start(id: number): Promise<Record<string, number>> {
     const query = `?id=${id}&status=started`;
     const response = await fetch(this.baseUrl.concat(query), {
       method: 'PATCH',
@@ -12,8 +12,7 @@ export class EngineApiService {
         'Content-Type': 'application/json',
       },
     });
-    response.json().then((data) => console.log(data));
-    return;
+    return response.json();
   }
 
   public async stop(id: number): Promise<void> {
@@ -24,7 +23,7 @@ export class EngineApiService {
         'Content-Type': 'application/json',
       },
     });
-    response.json().then((data) => console.log(data));
+    response.json();
     return;
   }
 }

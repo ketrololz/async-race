@@ -1,5 +1,5 @@
 import type { InputProps } from '../types/input-props';
-import BaseComponent from '../utils/base-component';
+import BaseComponent from './base-component';
 
 export class InputComponent extends BaseComponent<'input'> {
   constructor(props: InputProps<'input'> = {}) {

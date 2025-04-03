@@ -1,5 +1,5 @@
 import type Router from '../router/router';
-import type BaseComponent from '../utils/base-component';
+import type BaseComponent from '../components/base-component';
 
 export type Route<T extends BaseComponent<'div'> = BaseComponent<'div'>> = {
   name: string;

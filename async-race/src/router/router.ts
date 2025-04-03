@@ -1,5 +1,5 @@
 import type { Route } from '../types/route.ts';
-import type BaseComponent from '../utils/base-component.ts';
+import type BaseComponent from '../components/base-component.ts';
 
 export default class Router {
   constructor(
