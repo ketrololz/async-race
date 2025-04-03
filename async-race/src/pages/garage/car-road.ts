@@ -6,6 +6,8 @@ import { EventEmitter } from '../../utils/event-emitter';
 export class CarRoad extends BaseComponent<'div'> {
   public delete = new EventEmitter<void>();
   public select = new EventEmitter<void>();
+  public start = new EventEmitter<void>();
+  public stop = new EventEmitter<void>();
 
   constructor(private readonly car: Car) {
     super({ tag: 'div', className: 'car-road' });
@@ -45,14 +47,14 @@ export class CarRoad extends BaseComponent<'div'> {
       className: 'btn start-drive-btn',
       parent: carControllerButtonsContainer,
       text: 'start',
-      onClick: (): void => console.log('start'),
+      onClick: (): void => this.start.emit(),
     });
 
     new ButtonComponent({
       className: 'btn stop-drive-btn',
       parent: carControllerButtonsContainer,
       text: 'stop',
-      onClick: (): void => console.log('stop'),
+      onClick: (): void => this.stop.emit(),
     });
 
     const roadContainer = new BaseComponent({

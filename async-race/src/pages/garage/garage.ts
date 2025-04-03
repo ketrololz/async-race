@@ -68,6 +68,8 @@ export class Garage extends BaseComponent<'div'> {
 
           this.subscribeDeleteButtons(carRoad, options);
           this.subscribeSelectButtons(carRoad, options);
+          this.subscribeStartButtons(carRoad);
+          this.subscribeStopButtons(carRoad);
 
           this._cars.push(carRoad);
         });
@@ -88,6 +90,22 @@ export class Garage extends BaseComponent<'div'> {
     this.subscribe(
       road.select.subscribe(() => {
         options.updater.setSelected(road.getCar());
+      }),
+    );
+  }
+
+  private subscribeStartButtons(road: CarRoad): void {
+    this.subscribe(
+      road.start.subscribe(() => {
+        this.carsFacade.startEngine(road.getCar());
+      }),
+    );
+  }
+
+  private subscribeStopButtons(road: CarRoad): void {
+    this.subscribe(
+      road.stop.subscribe(() => {
+        this.carsFacade.stopEngine(road.getCar());
       }),
     );
   }
