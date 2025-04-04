@@ -26,4 +26,21 @@ export class EngineApiService {
     response.json();
     return;
   }
+
+  public async drive(id: number): Promise<number> {
+    try {
+      const query = `?id=${id}&status=drive`;
+      const response = await fetch(this.baseUrl.concat(query), {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      return response.status;
+    } catch(e) {
+      console.log(e)
+      return 0;
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import { CAR_WIDTH } from "../constants/app-settings";
+import { ANIMATION_CORRECTION_DISTANCE, CAR_WIDTH } from "../constants/app-settings";
 import type { CarProps } from "../types/car-props";
 import BaseComponent from "./base-component";
 
@@ -16,13 +16,13 @@ export class CarComponent extends BaseComponent<'div'> {
       const start = performance.now();
 
       const drive = (): void => {
-        const timeFraction = (performance.now() - start) / timeInMs;
-        const progress = timeFraction;
-        const currentWidth = window.innerWidth - CAR_WIDTH;
-        const distance = (currentWidth * progress) - this.node.clientWidth
+        const progress = (performance.now() - start) / timeInMs;
+        const currentWidth = window.innerWidth;
+        const distance = (currentWidth * progress);
+        const percent = (distance) / (currentWidth) * 100
 
-        if (distance > 0) {
-          this.node.style.left = `${distance}px`;
+        if (distance > CAR_WIDTH + ANIMATION_CORRECTION_DISTANCE) {
+          this.node.style.left = `calc(${percent}% - ${CAR_WIDTH}px)`;
         }
 
         if (progress < 1 && !this.animationStopped) {

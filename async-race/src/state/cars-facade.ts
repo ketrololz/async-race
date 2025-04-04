@@ -3,6 +3,7 @@ import { CarsApiService } from '../services/cars-api-service';
 import type { Car } from '../components/car';
 import { CARS_PER_PAGE } from '../constants/app-settings';
 import { EngineApiService } from '../services/engine-api-service';
+import type { CarRoad } from '../pages/garage/car-road';
 
 class CarsFacade {
   public carList = new Observable<Car[]>([]);
@@ -65,12 +66,29 @@ class CarsFacade {
 
   public async startEngine(car: Car): Promise<number> {
     const response = await this.engineApiService.start(car.id);
-    const time = response.distance / response.velocity
+    const time = response.distance / response.velocity;
     return time;
   }
 
   public async stopEngine(car: Car): Promise<void> {
     await this.engineApiService.stop(car.id);
+  }
+
+  public async drive(car: Car): Promise<number> {
+    return this.engineApiService.drive(car.id);
+  }
+
+  public async startRace(road: CarRoad): Promise<void | CarRoad> {
+    const time = await this.startEngine(road.getCar());
+    road.getCarElement().animateCar(time);
+    const status = await this.drive(road.getCar());
+    if (status === 500) {
+      road.getCarElement().stopAnimation();
+    }
+
+    if (status === 200) {
+      return road;
+    }
   }
 }
 
