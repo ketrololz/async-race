@@ -1,22 +1,20 @@
 import { ButtonComponent } from '../../components/button-component';
-import { GENERATE_CARS_COUNT } from '../../constants/app-settings';
 import { carModels } from '../../constants/cars';
 import type { Car } from '../../components/car';
-import type { Props } from '../../types/props';
-import BaseComponent from '../../components/base-component';
 import { EventEmitter } from '../../utils/event-emitter';
 import { RGB_COLORS } from '../../constants/rgb-colors';
+import type { ButtonProps } from '../../types/button-props';
+import { GENERATE_CARS_COUNT } from '../../constants/app-settings';
 
-export class CarsGenerator extends BaseComponent<'div'> {
+export class CarsGenerator extends ButtonComponent {
   public readonly add = new EventEmitter<Omit<Car, 'id'>>();
 
-  constructor(props: Props<'div'> = {}) {
-    super({ className: 'car-creator', ...props });
-    new ButtonComponent({
-      className: 'btn',
+  constructor(props: ButtonProps<'button'> = {}) {
+    super({
+      className: 'car-generator btn',
       text: 'generate',
-      parent: this,
-      onClick: (): void => this.generate(GENERATE_CARS_COUNT),
+      ...props,
+      onClick: () => this.generate(GENERATE_CARS_COUNT),
     });
   }
 

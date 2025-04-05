@@ -6,7 +6,6 @@ import { CarsOptions } from './cars-options';
 import { carsFacade } from '../../state/cars-facade';
 import type { HtmlTags } from '../../types/html-tags';
 
-
 export class Garage extends BaseComponent<'div'> {
   private readonly carsFacade = carsFacade;
   private _cars: CarRoad[] = [];
@@ -60,7 +59,9 @@ export class Garage extends BaseComponent<'div'> {
   ): void {
     this.subscribe(
       this.carsFacade.carList.subscribe((cars) => {
-        this._cars.forEach((car) => {car.destroyNode()});
+        this._cars.forEach((car) => {
+          car.destroyNode();
+        });
         this._cars = [];
         this.title.text = `Garage(${this.carsFacade.totalCount})`;
         this.subtitle.text = `Page ${this.carsFacade.page}`;
@@ -74,6 +75,7 @@ export class Garage extends BaseComponent<'div'> {
           this.subscribeStartButtons(carRoad);
           this.subscribeStopButtons(carRoad);
           this.subscribeRaceButton(carRoad, options);
+          this.subscribeResetButton(carRoad, options);
 
           this._cars.push(carRoad);
         });
@@ -117,9 +119,9 @@ export class Garage extends BaseComponent<'div'> {
 
   private subscribeStopButtons(road: CarRoad): void {
     road.subscribe(
-      road.stop.subscribe(() => {
-        this.carsFacade.stopEngine(road.getCar());
-        road.getCarElement().stopAnimation();
+      road.stop.subscribe(async () => {
+        await this.carsFacade.stopEngine(road.getCar());
+        road.getCarElement().returnToStartPosition();
       }),
     );
   }
@@ -129,9 +131,21 @@ export class Garage extends BaseComponent<'div'> {
       options.raceStarter.race.subscribe(async () => {
         this.hasWinner = false;
         const result = await this.carsFacade.startRace(road);
+
         if (result && !this.hasWinner) {
+          const text = `${road.getCarElement().getTime()}, ${road.getCar().name}`;
+          alert(text);
           this.hasWinner = true;
         }
+      }),
+    );
+  }
+
+  private subscribeResetButton(road: CarRoad, options: CarsOptions): void {
+    road.subscribe(
+      options.raceResetter.reset.subscribe(() => {
+
+        this.carsFacade.stopRace(road);
       }),
     );
   }

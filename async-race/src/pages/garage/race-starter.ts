@@ -1,18 +1,16 @@
 import { ButtonComponent } from '../../components/button-component';
-import type { Props } from '../../types/props';
-import BaseComponent from '../../components/base-component';
 import { EventEmitter } from '../../utils/event-emitter';
+import type { ButtonProps } from '../../types/button-props';
 
-export class RaceStarter extends BaseComponent<'div'> {
+export class RaceStarter extends ButtonComponent {
   public readonly race = new EventEmitter<void>();
 
-  constructor(props: Props<'div'> = {}) {
-    super({ className: 'car-creator', ...props });
-    new ButtonComponent({
-      className: 'btn',
+  constructor(props: ButtonProps<'button'> = {}) {
+    super({
+      className: 'car-creator btn',
       text: 'start race',
-      parent: this,
       onClick: (): void => this.race.emit(),
+      ...props,
     });
   }
 }

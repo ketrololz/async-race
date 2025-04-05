@@ -90,6 +90,11 @@ class CarsFacade {
       return road;
     }
   }
+
+  public async stopRace(road: CarRoad): Promise<void> {
+    await this.stopEngine(road.getCar());
+    road.getCarElement().returnToStartPosition();
+  }
 }
 
 export const carsFacade = new CarsFacade();
