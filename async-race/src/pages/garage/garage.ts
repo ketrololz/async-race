@@ -6,6 +6,7 @@ import { CarsOptions } from './cars-options';
 import { carsFacade } from '../../state/cars-facade';
 import type { HtmlTags } from '../../types/html-tags';
 
+
 export class Garage extends BaseComponent<'div'> {
   private readonly carsFacade = carsFacade;
   private _cars: CarRoad[] = [];
@@ -59,8 +60,7 @@ export class Garage extends BaseComponent<'div'> {
   ): void {
     this.subscribe(
       this.carsFacade.carList.subscribe((cars) => {
-        this._cars.forEach((car) => car.destroyNode());
-
+        this._cars.forEach((car) => {car.destroyNode()});
         this._cars = [];
         this.title.text = `Garage(${this.carsFacade.totalCount})`;
         this.subtitle.text = `Page ${this.carsFacade.page}`;
@@ -82,7 +82,7 @@ export class Garage extends BaseComponent<'div'> {
   }
 
   private subscribeDeleteButtons(road: CarRoad, options: CarsOptions): void {
-    this.subscribe(
+    road.subscribe(
       road.delete.subscribe(() => {
         this.carsFacade.remove(road.getCar());
         options.updater.removeSelected();
@@ -91,7 +91,7 @@ export class Garage extends BaseComponent<'div'> {
   }
 
   private subscribeSelectButtons(road: CarRoad, options: CarsOptions): void {
-    this.subscribe(
+    road.subscribe(
       road.select.subscribe(() => {
         options.updater.setSelected(road.getCar());
       }),
@@ -99,7 +99,7 @@ export class Garage extends BaseComponent<'div'> {
   }
 
   private subscribeStartButtons(road: CarRoad): void {
-    this.subscribe(
+    road.subscribe(
       road.start.subscribe(async () => {
         try {
           const time = await this.carsFacade.startEngine(road.getCar());
@@ -116,7 +116,7 @@ export class Garage extends BaseComponent<'div'> {
   }
 
   private subscribeStopButtons(road: CarRoad): void {
-    this.subscribe(
+    road.subscribe(
       road.stop.subscribe(() => {
         this.carsFacade.stopEngine(road.getCar());
         road.getCarElement().stopAnimation();
@@ -125,11 +125,9 @@ export class Garage extends BaseComponent<'div'> {
   }
 
   private subscribeRaceButton(road: CarRoad, options: CarsOptions): void {
-    console.log('tetet')
-    this.subscribe(
+    road.subscribe(
       options.raceStarter.race.subscribe(async () => {
         this.hasWinner = false;
-        console.log(road.getCar().id)
         const result = await this.carsFacade.startRace(road);
         if (result && !this.hasWinner) {
           this.hasWinner = true;

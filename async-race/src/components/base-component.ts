@@ -81,7 +81,6 @@ export default class BaseComponent<T extends HtmlTags> {
   }
 
   public destroyNode(): void {
-    console.log('te')
     this.destroyChildren();
     this.unsubscribeAll();
     this._node.remove();
