@@ -125,15 +125,14 @@ export class Garage extends BaseComponent<'div'> {
   }
 
   private subscribeRaceButton(road: CarRoad, options: CarsOptions): void {
+    console.log('tetet')
     this.subscribe(
       options.raceStarter.race.subscribe(async () => {
         this.hasWinner = false;
-
         console.log(road.getCar().id)
         const result = await this.carsFacade.startRace(road);
         if (result && !this.hasWinner) {
           this.hasWinner = true;
-          console.log(result.getCar().name);
         }
       }),
     );

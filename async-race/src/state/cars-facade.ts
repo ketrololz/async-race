@@ -23,11 +23,11 @@ class CarsFacade {
     try {
       await this.carsApiService.remove(car);
       this.carList.update((cars) => cars.filter((elem) => elem.id !== car.id));
-
+      
       if (this.carList.value.length < 1 && this._page !== 1) {
         this._page -= 1;
       }
-
+      
       this.setPage(this._page);
     } catch (e) {
       console.warn(e);
