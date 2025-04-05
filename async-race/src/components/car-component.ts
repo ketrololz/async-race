@@ -33,11 +33,9 @@ export class CarComponent extends BaseComponent<'div'> {
       if (progress > 1) {
         progress = 1;
       }
-      
+
       const distance = currentWidth * progress;
       const percent = (distance / currentWidth) * 100;
-
-      console.log(currentWidth);
 
       if (distance > CAR_WIDTH + ANIMATION_CORRECTION_DISTANCE) {
         this.node.style.left = `calc(${percent}% - ${CAR_WIDTH}px)`;

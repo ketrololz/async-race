@@ -5,6 +5,7 @@ import '../garage/garage.scss';
 import { CarsOptions } from './cars-options';
 import { carsFacade } from '../../state/cars-facade';
 import type { HtmlTags } from '../../types/html-tags';
+import { ModalComponent } from '../../components/modal-component';
 
 export class Garage extends BaseComponent<'div'> {
   private readonly carsFacade = carsFacade;
@@ -134,7 +135,10 @@ export class Garage extends BaseComponent<'div'> {
 
         if (result && !this.hasWinner) {
           const text = `${road.getCarElement().getTime()}, ${road.getCar().name}`;
-          alert(text);
+          const modal = new ModalComponent({
+            parent: this,
+          });
+          modal.show(text);
           this.hasWinner = true;
         }
       }),
