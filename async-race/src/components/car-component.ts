@@ -8,6 +8,7 @@ import BaseComponent from './base-component';
 
 export class CarComponent extends BaseComponent<'div'> {
   private animationStopped = false;
+  private animationId = 0;
   private timeInSeconds = 0;
   private container: BaseComponent<HtmlTags>;
 
@@ -42,7 +43,7 @@ export class CarComponent extends BaseComponent<'div'> {
       }
 
       if (progress < 1) {
-        requestAnimationFrame(drive);
+        this.animationId = requestAnimationFrame(drive);
       }
     };
 
@@ -50,7 +51,7 @@ export class CarComponent extends BaseComponent<'div'> {
   }
 
   public stopAnimation(): void {
-    this.animationStopped = true;
+    cancelAnimationFrame(this.animationId);
   }
 
   public returnToStartPosition(): void {

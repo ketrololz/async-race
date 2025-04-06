@@ -5,18 +5,25 @@ import type { Car } from '../components/car';
 export class CarsApiService {
   private readonly baseUrl = `${BASE_URL}${PATHS.garage}`;
   private totalCount: string | null = null;
-  
+
   public get totalCars(): string {
     return this.totalCount ?? '0';
   }
 
-  public async get(page: number = 1): Promise<Car[]> {
+  public async getPage(page: number = 1): Promise<Car[]> {
     const query = `?_page=${page}&_limit=${CARS_PER_PAGE}`;
     const response = await fetch(this.baseUrl.concat(query));
     const cars = await response.json();
 
     this.totalCount = response.headers.get('X-Total-Count');
     return cars;
+  }
+
+  public async getCar(id: number): Promise<Car> {
+    const query = `/${id}`;
+    const response = await fetch(this.baseUrl.concat(query));
+    const car = await response.json();
+    return car;
   }
 
   public async add(params: Omit<Car, 'id'>): Promise<Car> {

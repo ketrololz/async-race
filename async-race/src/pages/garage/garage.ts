@@ -6,9 +6,11 @@ import { CarsOptions } from './cars-options';
 import { carsFacade } from '../../state/cars-facade';
 import type { HtmlTags } from '../../types/html-tags';
 import { ModalComponent } from '../../components/modal-component';
+import { winnersFacade } from '../../state/winners-facade';
 
 export class Garage extends BaseComponent<'div'> {
   private readonly carsFacade = carsFacade;
+  private readonly winnersFacade = winnersFacade;
   private _cars: CarRoad[] = [];
   private title: BaseComponent<HtmlTags>;
   private subtitle: BaseComponent<HtmlTags>;
@@ -139,6 +141,15 @@ export class Garage extends BaseComponent<'div'> {
             parent: this,
           });
           modal.show(text);
+
+          const car = await this.winnersFacade.getById(road.getCar().id);
+
+          if (car) {
+            const bestTime = Number(car.time) > road.getCarElement().getTime() ? car.time : road.getCarElement().getTime().toString();
+            this.winnersFacade.update({ wins: String(Number(car.wins) + 1), time: bestTime, ...road.getCar() });
+          }
+
+          this.winnersFacade.add({ wins: '1', time: road.getCarElement().getTime().toString(), ...road.getCar() });
           this.hasWinner = true;
         }
       }),
@@ -148,7 +159,6 @@ export class Garage extends BaseComponent<'div'> {
   private subscribeResetButton(road: CarRoad, options: CarsOptions): void {
     road.subscribe(
       options.raceResetter.reset.subscribe(() => {
-
         this.carsFacade.stopRace(road);
       }),
     );

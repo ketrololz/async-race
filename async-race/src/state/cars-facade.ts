@@ -19,6 +19,11 @@ class CarsFacade {
     return this._page;
   }
 
+  public async getById(id: number): Promise<Car> {
+    const car = await this.carsApiService.getCar(id);
+    return car;
+  }
+
   public async remove(car: Car): Promise<void> {
     try {
       await this.carsApiService.remove(car);
@@ -58,7 +63,7 @@ class CarsFacade {
   public async setPage(page: number = 1): Promise<void> {
     const totalPages = Math.ceil(Number(this.totalCount) / CARS_PER_PAGE) || 1;
     if (page > 0 && page <= totalPages) {
-      const cars = await this.carsApiService.get(page);
+      const cars = await this.carsApiService.getPage(page);
       this._page = page;
       this.carList.set(cars);
     }
