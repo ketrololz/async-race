@@ -1,9 +1,21 @@
 :root {
+  --background: #74C258;
   --grey: #3E4050;
   --white: #fff;
-  --red: red;
+  --red: #910D0D;
+  --light-red: #FBA3A3;
+  --dark-red: #860B0B;
+  --yellow: #F5DC4A;
+  --brown: #260C0C;
+  --brown-70: rgba(38, 12, 12, 0.7);
 }
 
 $grey: var(--grey);
 $white: var(--white);
 $red: var(--red);
+$light-red: var( --light-red);
+$background: var(--background);
+$dark-red: var(--dark-red);
+$yellow: var(--yellow);
+$brown: var(--brown);
+$brown-70: var(--brown-70);

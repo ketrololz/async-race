@@ -1,11 +1,31 @@
 @use '../../styles/colors';
 
 .car-road {
+  position: relative;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  background-color: colors.$grey;
+  gap: 30px;
+  // background: url(../../styles/textures/road.webp);
+  // background-size: contain;
+
+  &::after {
+    position: absolute;
+    content: '';
+    background: url(../../styles/textures/road_2.webp);
+    background-size: contain;
+    width: 100%;
+    left: 0;
+    top: 20px;
+    height: 100px;
+    z-index: -1;
+  }
+}
+
+.garage {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
 }
 
 .car-title {
@@ -17,25 +37,17 @@
 .car-container {
   position: relative;
   height: 100%;
+  width: 100%;
 
   &::after {
     position: absolute;
     content: '';
-    height: 30px;
-    width: 4px;
-    background-color: colors.$red;
-    top: 0;
-    right: 80px;
-  }
-
-  &::before {
-    position: absolute;
-    content: '';
-    height: 15px;
-    width: 20px;
-    background-color: colors.$red;
-    top: 0;
-    right: 80px;
+    height: 80px;
+    width: 70px;
+    background: url(../../styles/textures/flag.webp) no-repeat;
+    background-size: contain;
+    top: -45px;
+    right: 40px;
   }
 }
 
@@ -49,8 +61,18 @@
   border-radius: 10px;
 }
 
+.road-container {
+  display: flex;
+  row-gap: 50px;
+  margin: 40px 0;
+  flex-direction: column;
+}
+
 .road {
-  position: relative;
-  height: 30px;
-  border-bottom: dashed 2px colors.$white;
+  display: flex;
+}
+
+.car-controller-btns-container {
+  display: flex;
+  gap: 10px;
 }

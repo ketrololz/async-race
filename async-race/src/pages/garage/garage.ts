@@ -17,14 +17,16 @@ export class Garage extends BaseComponent<'div'> {
   private hasWinner = false;
 
   constructor() {
-    super();
+    super({ className: 'garage' });
 
     this.title = new BaseComponent({
+      tag: 'h2',
       parent: this,
       text: `Garage(0)`,
     });
 
     this.subtitle = new BaseComponent({
+      tag: 'h3',
       parent: this,
       text: `Page 1`,
     });
@@ -35,6 +37,7 @@ export class Garage extends BaseComponent<'div'> {
 
     const carsContainer = new BaseComponent({
       parent: this,
+      className: 'road-container'
     });
 
     new ButtonComponent({

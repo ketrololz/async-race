@@ -21,11 +21,13 @@ export class Winners extends BaseComponent<'div'> {
     super();
 
     this.title = new BaseComponent({
+      tag: 'h2',
       parent: this,
       text: `Winners(0)`,
     });
 
     this.subtitle = new BaseComponent({
+      tag: 'h3',
       parent: this,
       text: `Page 1`,
     });

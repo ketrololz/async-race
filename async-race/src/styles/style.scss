@@ -1,3 +1,34 @@
+@use './colors';
+@use './fonts';
+
 body {
-  background-color: aquamarine;
+  font-family: Atma;
+  background: url(../styles/textures/background.webp) no-repeat;
+  background-size: cover;
+  margin: 0;
+}
+
+.btn {
+  font-family: Atma;
+  font-weight: 600;
+  color: colors.$light-red;
+  position: relative;
+  border: 2px solid colors.$dark-red;
+  background-color: colors.$brown;
+  border-radius: 10px;
+  padding: 5px 10px;
+  z-index: 5;
+  cursor: pointer;
+  box-shadow: 0 2px 10px colors.$brown-70;
+}
+
+h2 {
+  font-weight: 700;
+  margin: 0;
+  color: colors.$white;
+}
+
+h3 {
+  margin: 0;
+  color: colors.$white;
 }

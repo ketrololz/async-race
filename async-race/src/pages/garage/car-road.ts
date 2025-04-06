@@ -14,6 +14,41 @@ export class CarRoad extends BaseComponent<'div'> {
   constructor(private readonly car: Car) {
     super({ tag: 'div', className: 'car-road' });
 
+    const roadContainer = new BaseComponent({
+      className: 'road',
+      parent: this,
+    });
+
+    const carControllerButtonsContainer = new BaseComponent({
+      className: 'car-controller-btns-container',
+      parent: roadContainer,
+    });
+
+    new ButtonComponent({
+      className: 'btn start-drive-btn',
+      parent: carControllerButtonsContainer,
+      text: 'start',
+      onClick: (): void => this.start.emit(),
+    });
+
+    new ButtonComponent({
+      className: 'btn stop-drive-btn',
+      parent: carControllerButtonsContainer,
+      text: 'stop',
+      onClick: (): void => this.stop.emit(),
+    });
+
+    const carContainer = new BaseComponent({
+      className: 'car-container',
+      parent: roadContainer,
+    });
+
+    this.carElement = new CarComponent({
+      className: 'car',
+      parent: carContainer,
+      color: car.color,
+    });
+
     const carOptionsButtonsContainer = new BaseComponent({
       className: 'car-options-btns-container',
       parent: this,
@@ -38,46 +73,6 @@ export class CarRoad extends BaseComponent<'div'> {
       className: 'car-title',
       parent: carOptionsButtonsContainer,
       text: car.name,
-    });
-
-    const carControllerButtonsContainer = new BaseComponent({
-      className: 'car-controller-btns-container',
-      parent: this,
-    });
-
-    new ButtonComponent({
-      className: 'btn start-drive-btn',
-      parent: carControllerButtonsContainer,
-      text: 'start',
-      onClick: (): void => this.start.emit(),
-    });
-
-    new ButtonComponent({
-      className: 'btn stop-drive-btn',
-      parent: carControllerButtonsContainer,
-      text: 'stop',
-      onClick: (): void => this.stop.emit(),
-    });
-
-    const roadContainer = new BaseComponent({
-      className: 'road-container',
-      parent: this,
-    });
-
-    const carContainer = new BaseComponent({
-      className: 'car-container',
-      parent: roadContainer,
-    });
-
-    this.carElement = new CarComponent({
-      className: 'car',
-      parent: carContainer,
-      color: car.color,
-    });
-
-    new BaseComponent({
-      className: 'road',
-      parent: roadContainer,
     });
   }
 
