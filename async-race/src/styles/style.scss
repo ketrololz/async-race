@@ -4,7 +4,6 @@
 body {
   font-family: Atma;
   background: url(../styles/textures/background.webp) no-repeat;
-  background-size: cover;
   margin: 0;
 }
 
@@ -15,20 +14,26 @@ body {
   position: relative;
   border: 2px solid colors.$dark-red;
   background-color: colors.$brown;
-  border-radius: 10px;
-  padding: 5px 10px;
+  border-radius: 50px;
+  padding: 5px 15px;
   z-index: 5;
   cursor: pointer;
   box-shadow: 0 2px 10px colors.$brown-70;
 }
 
 h2 {
+  text-align: center;
   font-weight: 700;
   margin: 0;
   color: colors.$white;
 }
 
 h3 {
+  text-align: center;
   margin: 0;
   color: colors.$white;
+}
+
+.page-btns-container {
+  text-align: center;
 }

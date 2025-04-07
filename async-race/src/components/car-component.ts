@@ -5,6 +5,7 @@ import {
 import type { CarProps } from '../types/car-props';
 import type { HtmlTags } from '../types/html-tags';
 import BaseComponent from './base-component';
+import { FetchSvgComponent } from './FetchSvgComponent';
 
 export class CarComponent extends BaseComponent<'div'> {
   private animationStopped = false;
@@ -15,7 +16,9 @@ export class CarComponent extends BaseComponent<'div'> {
   constructor(props: CarProps<'div'>) {
     super({ tag: 'div', ...props });
     this.container = props.parent;
-    this.node.style.backgroundColor = props.color;
+    this.node.style.color = props.color;
+
+    new FetchSvgComponent('Car', { className: 'svg', parent: this });
   }
 
   public animateCar(timeInMs: number): void {

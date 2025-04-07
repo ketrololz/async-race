@@ -18,7 +18,7 @@ export class Winners extends BaseComponent<'div'> {
   private readonly winnersFacade = winnersFacade;
 
   constructor() {
-    super();
+    super({ className: 'table' });
 
     this.title = new BaseComponent({
       tag: 'h2',
@@ -125,16 +125,23 @@ export class Winners extends BaseComponent<'div'> {
       }
     });
 
+    const pageButtonsContainer = new BaseComponent({
+          parent: this,
+          className: 'page-btns-container',
+        })
+
     new ButtonComponent({
+      className: 'btn',
       text: 'prev',
-      parent: this,
+      parent: pageButtonsContainer,
       onClick: (): Promise<void> =>
         this.winnersFacade.setPage(this.winnersFacade.page - 1, this.typeSort),
     });
 
     new ButtonComponent({
+      className: 'btn',
       text: 'next',
-      parent: this,
+      parent: pageButtonsContainer,
       onClick: (): Promise<void> =>
         this.winnersFacade.setPage(this.winnersFacade.page + 1, this.typeSort),
     });

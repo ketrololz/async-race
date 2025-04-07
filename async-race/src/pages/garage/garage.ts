@@ -40,16 +40,23 @@ export class Garage extends BaseComponent<'div'> {
       className: 'road-container'
     });
 
-    new ButtonComponent({
-      text: 'prev',
+    const pageButtonsContainer = new BaseComponent({
       parent: this,
+      className: 'page-btns-container',
+    })
+
+    new ButtonComponent({
+      className: 'btn',
+      text: 'prev',
+      parent: pageButtonsContainer,
       onClick: (): Promise<void> =>
         this.carsFacade.setPage(this.carsFacade.page - 1),
     });
 
     new ButtonComponent({
+      className: 'btn',
       text: 'next',
-      parent: this,
+      parent: pageButtonsContainer,
       onClick: (): Promise<void> =>
         this.carsFacade.setPage(this.carsFacade.page + 1),
     });
