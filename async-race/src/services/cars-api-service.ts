@@ -10,6 +10,14 @@ export class CarsApiService {
     return this.totalCount ?? '0';
   }
 
+  public async lastPage(): Promise<number> {
+    const query = `?_page=${1}&_limit=${CARS_PER_PAGE}`;
+    const response = await fetch(this.baseUrl.concat(query));
+    const total = response.headers.get('X-Total-Count');
+    const pagesCount = Math.floor(Number(total) / CARS_PER_PAGE) + 1
+    return pagesCount;
+  }
+
   public async getPage(page: number = 1): Promise<Car[]> {
     const query = `?_page=${page}&_limit=${CARS_PER_PAGE}`;
     const response = await fetch(this.baseUrl.concat(query));

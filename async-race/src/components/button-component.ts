@@ -11,7 +11,6 @@ export class ButtonComponent extends BaseComponent<'button'> {
   }
 
   public disable(): void {
-    console.log('test')
     this.node.disabled = true;
   }
 

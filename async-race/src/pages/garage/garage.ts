@@ -8,8 +8,10 @@ import type { HtmlTags } from '../../types/html-tags';
 import { ModalComponent } from '../../components/modal-component';
 import { winnersFacade } from '../../state/winners-facade';
 import { raceFacade } from '../../state/race-facade';
+import { CARS_PER_PAGE } from '../../constants/app-settings';
 
 export class Garage extends BaseComponent<'div'> {
+  public subscriber: BaseComponent<'div'>;
   private readonly carsFacade = carsFacade;
   private readonly winnersFacade = winnersFacade;
   private readonly raceFacade = raceFacade;
@@ -52,27 +54,46 @@ export class Garage extends BaseComponent<'div'> {
       className: 'btn',
       text: 'prev',
       parent: pageButtonsContainer,
-      onClick: (): Promise<void> =>
-        this.carsFacade.setPage(this.carsFacade.page - 1),
+      onClick: async (): Promise<void> => {
+        this.nextButton.enable();
+        this.subscriber.destroyNode();
+        await this.carsFacade.setPage(this.carsFacade.page - 1);
+        if (this.carsFacade.page <= 1) {
+          this.prevButton.disable();
+        }
+      },
     });
 
     this.nextButton = new ButtonComponent({
       className: 'btn',
       text: 'next',
       parent: pageButtonsContainer,
-      onClick: (): Promise<void> =>
-        this.carsFacade.setPage(this.carsFacade.page + 1),
+      onClick: async (): Promise<void> => {
+        this.prevButton.enable();
+        this.subscriber.destroyNode();
+        await this.carsFacade.setPage(this.carsFacade.page + 1);
+        if (
+          this.carsFacade.page >=
+          Math.floor(Number(this.carsFacade.totalCount) / CARS_PER_PAGE) + 1
+        ) {
+          this.nextButton.disable();
+        }
+      },
     });
 
     this.carsFacade.setPage(this.carsFacade.page);
-
+    this.subscriber = new BaseComponent();
     this.renderRoads(options, carsContainer);
   }
 
-  private renderRoads(
+  private async renderRoads(
     options: CarsOptions,
     parent: BaseComponent<HtmlTags>,
-  ): void {
+  ): Promise<void> {
+    this.subscriber = new BaseComponent();
+    if (this.carsFacade.page <= 1) {
+      this.prevButton.disable();
+    }
     this.subscribe(
       this.carsFacade.carList.subscribe((cars) => {
         this._cars.forEach((car) => {
@@ -92,11 +113,17 @@ export class Garage extends BaseComponent<'div'> {
           this.subscribeStopButtons(carRoad);
           this._cars.push(carRoad);
         });
-        
+
         this.subscribeResetButton(options);
         this.subscribeRaceButton(options);
       }),
     );
+
+    const pagesCount = await this.carsFacade.getLastPage();
+    
+    if (Number(this.carsFacade.page) >= pagesCount) {
+      this.nextButton.disable();
+    }
   }
 
   private subscribeDeleteButtons(road: CarRoad, options: CarsOptions): void {
@@ -128,7 +155,7 @@ export class Garage extends BaseComponent<'div'> {
             road.getCarElement().stopAnimation();
           }
         } catch (e) {
-          console.log(e);
+          console.warn(e);
         }
       }),
     );
@@ -143,47 +170,8 @@ export class Garage extends BaseComponent<'div'> {
     );
   }
 
-  // private subscribeRaceButton(options: CarsOptions): void {
-  //   this.subscribe(
-  //     options.raceStarter.race.subscribe(async () => {
-  //       this.hasWinner = false;
-  //       const winner = await this.carsFacade.startRace(this._cars);
-
-  //       if (winner && !this.hasWinner) {
-  //         const text = `${winner.getCarElement().getTime()}, ${winner.getCar().name}`;
-  //         const modal = new ModalComponent({
-  //           parent: this,
-  //           className: 'modal-winner',
-  //         });
-  //         modal.show(text);
-
-  //         const car = await this.winnersFacade.getById(winner.getCar().id);
-
-  //         if (car) {
-  //           const bestTime =
-  //             Number(car.time) > winner.getCarElement().getTime()
-  //               ? car.time
-  //               : winner.getCarElement().getTime().toString();
-  //           this.winnersFacade.update({
-  //             wins: String(Number(car.wins) + 1),
-  //             time: bestTime,
-  //             ...winner.getCar(),
-  //           });
-  //         }
-
-  //         this.winnersFacade.add({
-  //           wins: '1',
-  //           time: winner.getCarElement().getTime().toString(),
-  //           ...winner.getCar(),
-  //         });
-  //         this.hasWinner = true;
-  //       }
-  //     }),
-  //   );
-  // }
-
   private subscribeRaceButton(options: CarsOptions): void {
-    this.subscribe(
+    this.subscriber.subscribe(
       options.raceStarter.race.subscribe(async () => {
         this.nextButton.disable();
         this.prevButton.disable();
@@ -191,15 +179,17 @@ export class Garage extends BaseComponent<'div'> {
           el.deleteButton.disable();
           el.selectButton.disable();
           el.startButton.disable();
-        })
+          el.stopButton.disable();
+        });
         options.raceStarter.disable();
         options.generator.disable();
         options.creator.creatorButton.disable();
         options.updater.updaterButton.disable();
-        
+
         const winner = await this.raceFacade.startRace(this._cars);
         if (winner) {
-          const text = `${winner.name}, ${winner.time}`;
+          const seconds = (Math.round(Number(winner.time) / 10) * 10) / 1000;
+          const text = `${winner.name}, ${seconds}`;
           const modal = new ModalComponent({
             parent: this,
             className: 'modal-winner',
@@ -211,7 +201,7 @@ export class Garage extends BaseComponent<'div'> {
   }
 
   private subscribeResetButton(options: CarsOptions): void {
-    this.subscribe(
+    this.subscriber.subscribe(
       options.raceResetter.reset.subscribe(async () => {
         await this.raceFacade.stopRace(this._cars);
         this.nextButton.enable();
@@ -220,21 +210,13 @@ export class Garage extends BaseComponent<'div'> {
           el.deleteButton.enable();
           el.selectButton.enable();
           el.startButton.enable();
-        })
+          el.stopButton.enable();
+        });
         options.raceStarter.enable();
         options.generator.enable();
         options.creator.creatorButton.enable();
         options.updater.updaterButton.enable();
-
-        console.log('ye')
       }),
     );
   }
-  // private subscribeResetButton(road: CarRoad, options: CarsOptions): void {
-  //   road.subscribe(
-  //     options.raceResetter.reset.subscribe(async () => {
-  //       this.carsFacade.stopRace(road);
-  //     }),
-  //   );
-  // }
 }

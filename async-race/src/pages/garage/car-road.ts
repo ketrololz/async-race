@@ -12,6 +12,7 @@ export class CarRoad extends BaseComponent<'div'> {
   public startButton: ButtonComponent;
   public deleteButton: ButtonComponent;
   public selectButton: ButtonComponent;
+  public stopButton: ButtonComponent;
   private carElement: CarComponent;
 
   constructor(private readonly car: Car) {
@@ -34,7 +35,7 @@ export class CarRoad extends BaseComponent<'div'> {
       onClick: (): void => this.start.emit(),
     });
 
-    new ButtonComponent({
+    this.stopButton = new ButtonComponent({
       className: 'btn stop-drive-btn',
       parent: carControllerButtonsContainer,
       text: 'stop',
