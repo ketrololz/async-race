@@ -3,36 +3,39 @@
 
 .table {
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  align-items: center;
   gap: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
 .table-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: colors.$white;
   gap: 10px;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
   max-width: 600px;
+
+  color: colors.$white;
 }
 
 .title-table-container {
   display: grid;
   grid-template-columns: 2fr 3fr 7fr 2fr 3fr;
-  width: 100%;
   column-gap: 10px;
   justify-content: space-between;
+
+  width: 100%;
 }
 
 .winner-line {
   display: grid;
   grid-template-columns: 2fr 3fr 7fr 2fr 3fr;
-  align-items: center;
   column-gap: 10px;
+  align-items: center;
   justify-content: space-between;
 }
 
@@ -43,19 +46,21 @@
 }
 
 .table-title {
-  font-weight: 600;
   font-size: 16px;
+  font-weight: 600;
 }
 
 .table-title-btn {
-  font-size: 16px;
-  border: none;
-  background: none;
-  outline: none;
   margin: 0;
   padding: 0;
-  text-align: left;
+  border: none;
+
   font-family: Atma;
+  font-size: 16px;
   font-weight: 600;
   color: colors.$white;
+  text-align: left;
+
+  background: none;
+  outline: none;
 }

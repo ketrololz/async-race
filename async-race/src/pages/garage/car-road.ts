@@ -1,5 +1,5 @@
 import { ButtonComponent } from '../../components/button-component';
-import type { Car } from '../../components/car';
+import type { Car } from '../../types/car';
 import BaseComponent from '../../components/base-component';
 import { EventEmitter } from '../../utils/event-emitter';
 import { CarComponent } from '../../components/car-component';

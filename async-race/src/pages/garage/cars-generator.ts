@@ -1,6 +1,6 @@
 import { ButtonComponent } from '../../components/button-component';
 import { carModels } from '../../constants/cars';
-import type { Car } from '../../components/car';
+import type { Car } from '../../types/car';
 import { EventEmitter } from '../../utils/event-emitter';
 import { RGB_COLORS } from '../../constants/rgb-colors';
 import type { ButtonProps } from '../../types/button-props';

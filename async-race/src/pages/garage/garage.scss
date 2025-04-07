@@ -2,30 +2,37 @@
 
 .car-road {
   position: relative;
-  padding: 10px;
+
   display: flex;
   flex-direction: column;
   gap: 30px;
 
+  padding: 10px;
+
   &::after {
-    position: absolute;
     content: '';
-    background: url(../../styles/textures/road_2.webp);
-    background-size: contain;
-    width: 100%;
-    left: 0;
-    top: 20px;
-    height: 100px;
+
+    position: absolute;
     z-index: -1;
+    top: 20px;
+    left: 0;
+
+    width: 100%;
+    height: 100px;
+
+    background: url("../../styles/textures/road_2.webp");
+    background-size: contain;
   }
 }
 
 .car-options {
-  text-align: center;
   display: flex;
-  gap: 10px;
   flex-direction: column;
+  gap: 10px;
+
   margin-bottom: 20px;
+
+  text-align: center;
 }
 
 .garage {
@@ -35,26 +42,29 @@
 }
 
 .car-title {
-  margin: 0;
   display: inline-block;
+  margin: 0;
   color: colors.$white;
 }
 
 .car-container {
   position: relative;
-  height: 100%;
   width: 100%;
+  height: 100%;
 
   &::after {
-    position: absolute;
     content: '';
-    height: 85px;
-    width: 70px;
-    background: url(../../styles/textures/flag.webp) no-repeat;
-    background-size: contain;
+
+    position: absolute;
+    z-index: 10;
     top: -48px;
     right: 70px;
-    z-index: 10;
+
+    width: 70px;
+    height: 85px;
+
+    background: url("../../styles/textures/flag.webp") no-repeat;
+    background-size: contain;
   }
 }
 
@@ -72,25 +82,25 @@
 
 .front-wheel {
   position: absolute;
+  z-index: 5;
   top: 25px;
   left: -5px;
-  z-index: 5;
   transform-origin: 50% 43%;
 }
 
 .back-wheel {
   position: absolute;
+  z-index: 5;
   top: 25px;
   left: 75px;
-  z-index: 5;
   transform-origin: 50% 43%;
 }
 
 .road-container {
   display: flex;
+  flex-direction: column;
   row-gap: 50px;
   margin: 40px 0;
-  flex-direction: column;
 }
 
 .road {
@@ -117,38 +127,42 @@
 
 .car-options-container {
   display: flex;
-  gap: 10px;
   flex-direction: column;
-  justify-content: center;
+  gap: 10px;
   align-items: center;
+  justify-content: center;
 }
 
 .car-creator {
   display: flex;
-  align-items: center;
   gap: 10px;
+  align-items: center;
 }
 
 .car-updater {
   display: flex;
-  align-items: center;
   gap: 10px;
+  align-items: center;
 }
 
 .text-input {
+  cursor: pointer;
+
+  position: relative;
+  z-index: 5;
+
   box-sizing: content-box;
   height: 30px;
-  outline: none;
+  padding: 2px 15px;
+  border: 2px solid colors.$dark-red;
+  border-radius: 15px;
+
   font-family: Atma;
   font-weight: 600;
   color: colors.$light-red;
-  position: relative;
-  border: 2px solid colors.$dark-red;
+
   background-color: colors.$brown;
-  border-radius: 15px;
-  padding: 2px 15px;
-  z-index: 5;
-  cursor: pointer;
+  outline: none;
   box-shadow: 0 2px 10px colors.$brown-70;
 
   &::placeholder {
@@ -157,22 +171,43 @@
 }
 
 .color-input {
+  cursor: pointer;
+
+  position: relative;
+
   box-sizing: content-box;
-  height: 30px;
   width: 30px;
-  outline: none;
+  height: 30px;
+  padding: 2px 6px;
+  border: 2px solid colors.$dark-red;
+  border-radius: 15px;
+
   font-family: Atma;
   font-weight: 600;
   color: colors.$light-red;
-  position: relative;
-  border: 2px solid colors.$dark-red;
+
   background-color: colors.$brown;
-  border-radius: 15px;
-  padding: 2px 6px;
-  cursor: pointer;
+  outline: none;
   box-shadow: 0 2px 10px colors.$brown-70;
 
   input[type="color" i] {
     box-sizing: content-box;
   }
+}
+
+.modal-winner {
+  padding: 25px 45px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  font-size: 24px;
+  border: 2px solid colors.$dark-red;
+  border-radius: 15px;
+
+  font-family: Atma;
+  font-weight: 600;
+  color: colors.$light-red;
+
+  background-color: colors.$brown;
+  box-shadow: 0 2px 10px colors.$brown-70;
 }

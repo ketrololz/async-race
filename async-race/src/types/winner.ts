@@ -1,4 +1,4 @@
-import type { Car } from '../components/car';
+import type { Car } from './car';
 
 export type Winner = {
   wins: string;

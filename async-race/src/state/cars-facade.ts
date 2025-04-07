@@ -1,6 +1,6 @@
 import { Observable } from '../utils/observable';
 import { CarsApiService } from '../services/cars-api-service';
-import type { Car } from '../components/car';
+import type { Car } from '../types/car';
 import { CARS_PER_PAGE } from '../constants/app-settings';
 import { EngineApiService } from '../services/engine-api-service';
 import type { CarRoad } from '../pages/garage/car-road';

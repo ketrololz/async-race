@@ -5,4 +5,4 @@ export const CARS_PER_PAGE = 7;
 export const WiNNERS_PER_PAGE = 10;
 export const CAR_WIDTH = 120;
 export const ANIMATION_CORRECTION_DISTANCE = 10;
-export const SVG_PATH = '../../public';
+export const SVG_PATH = '/icons';

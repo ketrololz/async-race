@@ -1,6 +1,6 @@
 import { BASE_URL, CARS_PER_PAGE } from '../constants/app-settings';
 import { PATHS } from '../constants/paths';
-import type { Car } from '../components/car';
+import type { Car } from '../types/car';
 
 export class CarsApiService {
   private readonly baseUrl = `${BASE_URL}${PATHS.garage}`;
