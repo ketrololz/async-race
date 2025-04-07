@@ -20,8 +20,9 @@ class RaceFacade {
         }
 
         if (status === 200) {
+          const seconds = (Math.round(time / 10) * 10) / 1000
           await this.winnersFacade.add({
-            time: time.toString(),
+            time: seconds.toString(),
             wins: '0',
             ...road.getCar(),
           });
