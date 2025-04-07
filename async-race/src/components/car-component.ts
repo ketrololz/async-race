@@ -12,7 +12,6 @@ export class CarComponent extends BaseComponent<'div'> {
   private animationId = 0;
   private timeInSeconds = 0;
   private container: BaseComponent<HtmlTags>;
-  private carSvg: FetchSvgComponent;
   private backWheelSvg: FetchSvgComponent;
   private frontWheelSvg: FetchSvgComponent;
 
@@ -23,7 +22,7 @@ export class CarComponent extends BaseComponent<'div'> {
 
     this.frontWheelSvg = new FetchSvgComponent('wheel', { className: 'front-wheel', parent: this });
     this.backWheelSvg = new FetchSvgComponent('wheel', { className: 'back-wheel', parent: this });
-    this.carSvg = new FetchSvgComponent('car2', { className: 'car-image', parent: this });
+    new FetchSvgComponent('car2', { className: 'car-image', parent: this });
   }
 
   public animateCar(timeInMs: number): void {

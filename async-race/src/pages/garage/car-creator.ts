@@ -18,6 +18,7 @@ export class CarCreator extends BaseComponent<'div'> {
     this.name = new InputComponent({
       parent: this,
       placeholder: 'car name',
+      className: 'text-input',
       onChange: (): void => {
         return this.name.value
           ? this.creatorButton.enable()
@@ -29,6 +30,7 @@ export class CarCreator extends BaseComponent<'div'> {
       parent: this,
       type: 'color',
       value: DEFAULT_COLOR,
+      className: 'color-input',
     });
 
     this.creatorButton = new ButtonComponent({

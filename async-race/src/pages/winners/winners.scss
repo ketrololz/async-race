@@ -1,4 +1,5 @@
 @use '../../styles/colors';
+@use '../../styles//fonts';
 
 .table {
   display: flex;
@@ -39,4 +40,22 @@
 .winners-container {
   align-items: center;
   width: 100%;
+}
+
+.table-title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.table-title-btn {
+  font-size: 16px;
+  border: none;
+  background: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  font-family: Atma;
+  font-weight: 600;
+  color: colors.$white;
 }

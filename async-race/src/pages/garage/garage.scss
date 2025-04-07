@@ -6,8 +6,6 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-  // background: url(../../styles/textures/road.webp);
-  // background-size: contain;
 
   &::after {
     position: absolute;
@@ -24,6 +22,10 @@
 
 .car-options {
   text-align: center;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .garage {
@@ -52,12 +54,13 @@
     background-size: contain;
     top: -48px;
     right: 70px;
+    z-index: 10;
   }
 }
 
 .car {
   position: absolute;
-  top: -35px;
+  top: -42px;
   left: 0;
   border-radius: 10px;
 }
@@ -92,9 +95,84 @@
 
 .road {
   display: flex;
+  column-gap: 20px;
 }
 
 .car-controller-btns-container {
   display: flex;
   gap: 10px;
+}
+
+.car-options-btns-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.car-selector-btns-container {
+  display: flex;
+  gap: 10px;
+}
+
+.car-options-container {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.car-creator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.car-updater {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.text-input {
+  box-sizing: content-box;
+  height: 30px;
+  outline: none;
+  font-family: Atma;
+  font-weight: 600;
+  color: colors.$light-red;
+  position: relative;
+  border: 2px solid colors.$dark-red;
+  background-color: colors.$brown;
+  border-radius: 15px;
+  padding: 2px 15px;
+  z-index: 5;
+  cursor: pointer;
+  box-shadow: 0 2px 10px colors.$brown-70;
+
+  &::placeholder {
+    color: colors.$light-red-darken;
+  }
+}
+
+.color-input {
+  box-sizing: content-box;
+  height: 30px;
+  width: 30px;
+  outline: none;
+  font-family: Atma;
+  font-weight: 600;
+  color: colors.$light-red;
+  position: relative;
+  border: 2px solid colors.$dark-red;
+  background-color: colors.$brown;
+  border-radius: 15px;
+  padding: 2px 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px colors.$brown-70;
+
+  input[type="color" i] {
+    box-sizing: content-box;
+  }
 }

@@ -2,10 +2,22 @@ import { ButtonComponent } from '../components/button-component';
 import type Router from '../router/router';
 import type { Props } from '../types/props';
 import BaseComponent from '../components/base-component';
+import './header.scss';
 
 export class Header extends BaseComponent<'div'> {
   constructor(router: Router, props: Props<'div'>) {
-    super({ tag: props.tag, ...props });
+    super({ tag: props.tag, className: 'header', ...props });
+
+    new BaseComponent({
+      parent: this,
+      className: 'h1',
+      text: 'Hell Racers',
+    })
+
+    const buttonsContainer = new BaseComponent({
+      parent: this,
+      className: 'header-buttons-container',
+    });
 
     const navButtons: ButtonComponent[] = [];
     const routes = router.allRoutes;
@@ -15,12 +27,12 @@ export class Header extends BaseComponent<'div'> {
         onClick: (): void => {
           router.navigate(route.path);
         },
-        className: 'nav-btn',
+        className: 'nav-btn btn',
       });
 
       navButtons.push(btn);
     });
 
-    this.appendChildren(...navButtons);
+    buttonsContainer.appendChildren(...navButtons);
   }
 }

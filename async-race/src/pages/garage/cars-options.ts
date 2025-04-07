@@ -19,15 +19,20 @@ export class CarsOptions extends BaseComponent<'div'> {
     super({ className: 'car-options', ...props });
 
     const optionsContainer = new BaseComponent({
+      className: 'car-options-container',
+      parent: this,
+    });
+
+    const optionsButtonsContainer = new BaseComponent({
       className: 'car-options-btns-container',
       parent: this,
     });
 
     this.creator = new CarCreator({ parent: optionsContainer });
     this.updater = new CarUpdater({ parent: optionsContainer });
-    this.generator = new CarsGenerator({ parent: optionsContainer });
-    this.raceStarter = new RaceStarter({ parent: optionsContainer });
-    this.raceResetter = new RaceResetter({ parent: optionsContainer});
+    this.generator = new CarsGenerator({ parent: optionsButtonsContainer });
+    this.raceStarter = new RaceStarter({ parent: optionsButtonsContainer });
+    this.raceResetter = new RaceResetter({ parent: optionsButtonsContainer});
 
     this.subscribe(
       this.creator.add.subscribe((car) => {

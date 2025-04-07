@@ -104,7 +104,7 @@ export class Winners extends BaseComponent<'div'> {
     });
 
     new ButtonComponent({
-      className: 'table-title',
+      className: 'table-title-btn',
       text: 'Wins',
       parent: tableTitleContainer,
       onClick: (): void => {
@@ -115,7 +115,7 @@ export class Winners extends BaseComponent<'div'> {
     });
 
     new ButtonComponent({
-      className: 'table-title',
+      className: 'table-title-btn',
       text: 'Best time',
       parent: tableTitleContainer,
       onClick: (): void => {

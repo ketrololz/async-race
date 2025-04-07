@@ -19,6 +19,7 @@ export class CarUpdater extends BaseComponent<'div'> {
     this.name = new InputComponent({
       parent: this,
       placeholder: 'new car name',
+      className: 'text-input',
       onChange: (): void => {
         return this.name.value
           ? this.updaterButton.enable()
@@ -30,6 +31,7 @@ export class CarUpdater extends BaseComponent<'div'> {
       parent: this,
       type: 'color',
       value: DEFAULT_COLOR,
+      className: 'color-input',
     });
 
     this.updaterButton = new ButtonComponent({

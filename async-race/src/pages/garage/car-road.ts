@@ -50,7 +50,7 @@ export class CarRoad extends BaseComponent<'div'> {
     });
 
     const carOptionsButtonsContainer = new BaseComponent({
-      className: 'car-options-btns-container',
+      className: 'car-selector-btns-container',
       parent: this,
     });
 

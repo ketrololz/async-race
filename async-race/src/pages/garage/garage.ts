@@ -37,13 +37,13 @@ export class Garage extends BaseComponent<'div'> {
 
     const carsContainer = new BaseComponent({
       parent: this,
-      className: 'road-container'
+      className: 'road-container',
     });
 
     const pageButtonsContainer = new BaseComponent({
       parent: this,
       className: 'page-btns-container',
-    })
+    });
 
     new ButtonComponent({
       className: 'btn',
@@ -100,6 +100,7 @@ export class Garage extends BaseComponent<'div'> {
     road.subscribe(
       road.delete.subscribe(() => {
         this.carsFacade.remove(road.getCar());
+        this.winnersFacade.delete(road.getCar().id);
         options.updater.removeSelected();
       }),
     );
@@ -149,17 +150,29 @@ export class Garage extends BaseComponent<'div'> {
           const text = `${road.getCarElement().getTime()}, ${road.getCar().name}`;
           const modal = new ModalComponent({
             parent: this,
+            className: 'modal-winner',
           });
           modal.show(text);
 
           const car = await this.winnersFacade.getById(road.getCar().id);
 
           if (car) {
-            const bestTime = Number(car.time) > road.getCarElement().getTime() ? car.time : road.getCarElement().getTime().toString();
-            this.winnersFacade.update({ wins: String(Number(car.wins) + 1), time: bestTime, ...road.getCar() });
+            const bestTime =
+              Number(car.time) > road.getCarElement().getTime()
+                ? car.time
+                : road.getCarElement().getTime().toString();
+            this.winnersFacade.update({
+              wins: String(Number(car.wins) + 1),
+              time: bestTime,
+              ...road.getCar(),
+            });
           }
 
-          this.winnersFacade.add({ wins: '1', time: road.getCarElement().getTime().toString(), ...road.getCar() });
+          this.winnersFacade.add({
+            wins: '1',
+            time: road.getCarElement().getTime().toString(),
+            ...road.getCar(),
+          });
           this.hasWinner = true;
         }
       }),
@@ -168,7 +181,7 @@ export class Garage extends BaseComponent<'div'> {
 
   private subscribeResetButton(road: CarRoad, options: CarsOptions): void {
     road.subscribe(
-      options.raceResetter.reset.subscribe(() => {
+      options.raceResetter.reset.subscribe(async () => {
         this.carsFacade.stopRace(road);
       }),
     );
