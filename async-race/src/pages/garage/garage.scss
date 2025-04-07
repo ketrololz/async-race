@@ -62,6 +62,27 @@
   border-radius: 10px;
 }
 
+.car-image {
+  position: absolute;
+  top: 0;
+}
+
+.front-wheel {
+  position: absolute;
+  top: 25px;
+  left: -5px;
+  z-index: 5;
+  transform-origin: 50% 43%;
+}
+
+.back-wheel {
+  position: absolute;
+  top: 25px;
+  left: 75px;
+  z-index: 5;
+  transform-origin: 50% 43%;
+}
+
 .road-container {
   display: flex;
   row-gap: 50px;

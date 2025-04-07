@@ -30,7 +30,7 @@
 .winner-line {
   display: grid;
   grid-template-columns: 2fr 3fr 7fr 2fr 3fr;
-
+  align-items: center;
   column-gap: 10px;
   justify-content: space-between;
 }

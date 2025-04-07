@@ -3,6 +3,8 @@ import type { Props } from "../types/props";
 import BaseComponent from "./base-component";
 
 export class FetchSvgComponent extends BaseComponent<'div'> {
+  public svgText = '';
+
   constructor(name: string, props: Props<'div'> = {}) {
     super({ tag: 'div', ...props });
     this.render(name);
@@ -10,7 +12,7 @@ export class FetchSvgComponent extends BaseComponent<'div'> {
 
   private async render(name: string): Promise<void> {
     const svg = await fetch(`${SVG_PATH}/${name}.svg`);
-    const svgText = await svg.text();
-    this.node.innerHTML = svgText;
+    this.svgText = await svg.text();
+    this.node.innerHTML = this.svgText;
   }
 }

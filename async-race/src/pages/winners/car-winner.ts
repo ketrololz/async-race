@@ -1,4 +1,5 @@
 import BaseComponent from '../../components/base-component';
+import { WinnerCarComponent } from '../../components/winner-car-component';
 import type { Winner } from '../../types/winner';
 
 export class CarWinner extends BaseComponent<'div'> {
@@ -11,10 +12,10 @@ export class CarWinner extends BaseComponent<'div'> {
       parent: this,
     });
 
-    new BaseComponent({
+    new WinnerCarComponent({
       className: 'winner-line_car',
-      text: car.color,
       parent: this,
+      color: car.color,
     });
 
     new BaseComponent({

@@ -12,13 +12,18 @@ export class CarComponent extends BaseComponent<'div'> {
   private animationId = 0;
   private timeInSeconds = 0;
   private container: BaseComponent<HtmlTags>;
+  private carSvg: FetchSvgComponent;
+  private backWheelSvg: FetchSvgComponent;
+  private frontWheelSvg: FetchSvgComponent;
 
   constructor(props: CarProps<'div'>) {
     super({ tag: 'div', ...props });
     this.container = props.parent;
     this.node.style.color = props.color;
 
-    new FetchSvgComponent('Car', { className: 'svg', parent: this });
+    this.frontWheelSvg = new FetchSvgComponent('wheel', { className: 'front-wheel', parent: this });
+    this.backWheelSvg = new FetchSvgComponent('wheel', { className: 'back-wheel', parent: this });
+    this.carSvg = new FetchSvgComponent('car2', { className: 'car-image', parent: this });
   }
 
   public animateCar(timeInMs: number): void {
@@ -33,6 +38,7 @@ export class CarComponent extends BaseComponent<'div'> {
       }
 
       let progress = (performance.now() - start) / timeInMs;
+      const angle = 1480 * progress;
 
       if (progress > 1) {
         progress = 1;
@@ -43,6 +49,8 @@ export class CarComponent extends BaseComponent<'div'> {
 
       if (distance > CAR_WIDTH + ANIMATION_CORRECTION_DISTANCE) {
         this.node.style.left = `calc(${percent}% - ${CAR_WIDTH}px)`;
+        this.frontWheelSvg.node.style.transform = `rotate(${angle}deg)`;
+        this.backWheelSvg.node.style.transform = `rotate(${angle}deg)`;
       }
 
       if (progress < 1) {
