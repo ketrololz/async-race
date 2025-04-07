@@ -8,8 +8,8 @@ import { EventEmitter } from '../../utils/event-emitter';
 
 export class CarUpdater extends BaseComponent<'div'> {
   public readonly change = new EventEmitter<Car>();
+  public updaterButton: ButtonComponent;
   private selected: Car | null = null;
-  private updaterButton: ButtonComponent;
   private name: InputComponent;
   private color: InputComponent;
 

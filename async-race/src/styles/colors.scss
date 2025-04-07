@@ -1,6 +1,8 @@
 :root {
   --background: #74C258;
-  --grey: #3E4050;
+  --grey: #555555;
+  --dark-grey: #272121;
+  --dark-grey-border: #483A3A;
   --white: #fff;
   --red: #910D0D;
   --light-red: #FBA3A3;
@@ -12,6 +14,8 @@
 }
 
 $grey: var(--grey);
+$dark-grey: var(--dark-grey);
+$dark-grey-border: var(--dark-grey-border);
 $white: var(--white);
 $red: var(--red);
 $light-red: var( --light-red);

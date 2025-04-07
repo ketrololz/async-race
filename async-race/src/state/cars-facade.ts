@@ -83,17 +83,41 @@ class CarsFacade {
     return this.engineApiService.drive(car.id);
   }
 
-  public async startRace(road: CarRoad): Promise<void | CarRoad> {
-    const time = await this.startEngine(road.getCar());
-    road.getCarElement().animateCar(time);
-    const status = await this.drive(road.getCar());
-    if (status === 500) {
-      road.getCarElement().stopAnimation();
-    }
+  // public async startRace(road: CarRoad): Promise<void | CarRoad> {
+  //   const time = await this.startEngine(road.getCar());
+  //   road.getCarElement().animateCar(time);
+  //   const status = await this.drive(road.getCar());
+  //   if (status === 500) {
+  //     road.getCarElement().stopAnimation();
+  //   }
 
-    if (status === 200) {
-      return road;
-    }
+  //   if (status === 200) {
+  //     return road;
+  //   }
+  // }
+
+  public async startRace(roads: CarRoad[]): Promise<null| CarRoad> {
+    let prevWinner: CarRoad | null = null;
+
+    roads.forEach(async (road) => {
+      const time = await this.startEngine(road.getCar());
+      road.getCarElement().animateCar(time);
+      const status = await this.drive(road.getCar());
+      if (status === 500) {
+        road.getCarElement().stopAnimation();
+      }
+      
+      if (status === 200) {
+        if (prevWinner) {
+          const winnerTime = await this.startEngine(prevWinner.getCar())
+          prevWinner = winnerTime < time ? road : prevWinner;
+        } else {
+          prevWinner = road;
+        }
+      }
+    })
+
+    return prevWinner;
   }
 
   public async stopRace(road: CarRoad): Promise<void> {

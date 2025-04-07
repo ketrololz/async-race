@@ -7,14 +7,17 @@ import { carsFacade } from '../../state/cars-facade';
 import type { HtmlTags } from '../../types/html-tags';
 import { ModalComponent } from '../../components/modal-component';
 import { winnersFacade } from '../../state/winners-facade';
+import { raceFacade } from '../../state/race-facade';
 
 export class Garage extends BaseComponent<'div'> {
   private readonly carsFacade = carsFacade;
   private readonly winnersFacade = winnersFacade;
+  private readonly raceFacade = raceFacade;
   private _cars: CarRoad[] = [];
   private title: BaseComponent<HtmlTags>;
   private subtitle: BaseComponent<HtmlTags>;
-  private hasWinner = false;
+  private prevButton: ButtonComponent;
+  private nextButton: ButtonComponent;
 
   constructor() {
     super({ className: 'garage' });
@@ -45,7 +48,7 @@ export class Garage extends BaseComponent<'div'> {
       className: 'page-btns-container',
     });
 
-    new ButtonComponent({
+    this.prevButton = new ButtonComponent({
       className: 'btn',
       text: 'prev',
       parent: pageButtonsContainer,
@@ -53,7 +56,7 @@ export class Garage extends BaseComponent<'div'> {
         this.carsFacade.setPage(this.carsFacade.page - 1),
     });
 
-    new ButtonComponent({
+    this.nextButton = new ButtonComponent({
       className: 'btn',
       text: 'next',
       parent: pageButtonsContainer,
@@ -87,11 +90,11 @@ export class Garage extends BaseComponent<'div'> {
           this.subscribeSelectButtons(carRoad, options);
           this.subscribeStartButtons(carRoad);
           this.subscribeStopButtons(carRoad);
-          this.subscribeRaceButton(carRoad, options);
-          this.subscribeResetButton(carRoad, options);
-
           this._cars.push(carRoad);
         });
+        
+        this.subscribeResetButton(options);
+        this.subscribeRaceButton(options);
       }),
     );
   }
@@ -140,50 +143,98 @@ export class Garage extends BaseComponent<'div'> {
     );
   }
 
-  private subscribeRaceButton(road: CarRoad, options: CarsOptions): void {
-    road.subscribe(
-      options.raceStarter.race.subscribe(async () => {
-        this.hasWinner = false;
-        const result = await this.carsFacade.startRace(road);
+  // private subscribeRaceButton(options: CarsOptions): void {
+  //   this.subscribe(
+  //     options.raceStarter.race.subscribe(async () => {
+  //       this.hasWinner = false;
+  //       const winner = await this.carsFacade.startRace(this._cars);
 
-        if (result && !this.hasWinner) {
-          const text = `${road.getCarElement().getTime()}, ${road.getCar().name}`;
+  //       if (winner && !this.hasWinner) {
+  //         const text = `${winner.getCarElement().getTime()}, ${winner.getCar().name}`;
+  //         const modal = new ModalComponent({
+  //           parent: this,
+  //           className: 'modal-winner',
+  //         });
+  //         modal.show(text);
+
+  //         const car = await this.winnersFacade.getById(winner.getCar().id);
+
+  //         if (car) {
+  //           const bestTime =
+  //             Number(car.time) > winner.getCarElement().getTime()
+  //               ? car.time
+  //               : winner.getCarElement().getTime().toString();
+  //           this.winnersFacade.update({
+  //             wins: String(Number(car.wins) + 1),
+  //             time: bestTime,
+  //             ...winner.getCar(),
+  //           });
+  //         }
+
+  //         this.winnersFacade.add({
+  //           wins: '1',
+  //           time: winner.getCarElement().getTime().toString(),
+  //           ...winner.getCar(),
+  //         });
+  //         this.hasWinner = true;
+  //       }
+  //     }),
+  //   );
+  // }
+
+  private subscribeRaceButton(options: CarsOptions): void {
+    this.subscribe(
+      options.raceStarter.race.subscribe(async () => {
+        this.nextButton.disable();
+        this.prevButton.disable();
+        this._cars.forEach((el) => {
+          el.deleteButton.disable();
+          el.selectButton.disable();
+          el.startButton.disable();
+        })
+        options.raceStarter.disable();
+        options.generator.disable();
+        options.creator.creatorButton.disable();
+        options.updater.updaterButton.disable();
+        
+        const winner = await this.raceFacade.startRace(this._cars);
+        if (winner) {
+          const text = `${winner.name}, ${winner.time}`;
           const modal = new ModalComponent({
             parent: this,
             className: 'modal-winner',
           });
           modal.show(text);
-
-          const car = await this.winnersFacade.getById(road.getCar().id);
-
-          if (car) {
-            const bestTime =
-              Number(car.time) > road.getCarElement().getTime()
-                ? car.time
-                : road.getCarElement().getTime().toString();
-            this.winnersFacade.update({
-              wins: String(Number(car.wins) + 1),
-              time: bestTime,
-              ...road.getCar(),
-            });
-          }
-
-          this.winnersFacade.add({
-            wins: '1',
-            time: road.getCarElement().getTime().toString(),
-            ...road.getCar(),
-          });
-          this.hasWinner = true;
         }
       }),
     );
   }
 
-  private subscribeResetButton(road: CarRoad, options: CarsOptions): void {
-    road.subscribe(
+  private subscribeResetButton(options: CarsOptions): void {
+    this.subscribe(
       options.raceResetter.reset.subscribe(async () => {
-        this.carsFacade.stopRace(road);
+        await this.raceFacade.stopRace(this._cars);
+        this.nextButton.enable();
+        this.prevButton.enable();
+        this._cars.forEach((el) => {
+          el.deleteButton.enable();
+          el.selectButton.enable();
+          el.startButton.enable();
+        })
+        options.raceStarter.enable();
+        options.generator.enable();
+        options.creator.creatorButton.enable();
+        options.updater.updaterButton.enable();
+
+        console.log('ye')
       }),
     );
   }
+  // private subscribeResetButton(road: CarRoad, options: CarsOptions): void {
+  //   road.subscribe(
+  //     options.raceResetter.reset.subscribe(async () => {
+  //       this.carsFacade.stopRace(road);
+  //     }),
+  //   );
+  // }
 }
