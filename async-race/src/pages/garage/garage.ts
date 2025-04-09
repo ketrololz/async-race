@@ -96,26 +96,28 @@ export class Garage extends BaseComponent<'div'> {
     }
     this.subscribe(
       this.carsFacade.carList.subscribe((cars) => {
-        this._cars.forEach((car) => {
-          car.destroyNode();
-        });
-        this._cars = [];
-        this.title.text = `Garage(${this.carsFacade.totalCount})`;
-        this.subtitle.text = `Page ${this.carsFacade.page}`;
 
-        cars.forEach((car) => {
-          const carRoad = new CarRoad(car);
-          parent.appendChildren(carRoad);
-
-          this.subscribeDeleteButtons(carRoad, options);
-          this.subscribeSelectButtons(carRoad, options);
-          this.subscribeStartButtons(carRoad);
-          this.subscribeStopButtons(carRoad);
-          this._cars.push(carRoad);
-        });
-
-        this.subscribeResetButton(options);
-        this.subscribeRaceButton(options);
+          this._cars.forEach((car) => {
+            car.destroyNode();
+          });
+          this._cars = [];
+          this.title.text = `Garage(${this.carsFacade.totalCount})`;
+          this.subtitle.text = `Page ${this.carsFacade.page}`;
+          
+          cars.forEach((car) => {
+            const carRoad = new CarRoad(car);
+            parent.appendChildren(carRoad);
+            
+            this.subscribeDeleteButtons(carRoad, options);
+            this.subscribeSelectButtons(carRoad, options);
+            this.subscribeStartButtons(carRoad);
+            this.subscribeStopButtons(carRoad);
+            this._cars.push(carRoad);
+          });
+          
+          this.subscribeResetButton(options);
+          this.subscribeRaceButton(options);
+        
       }),
     );
 

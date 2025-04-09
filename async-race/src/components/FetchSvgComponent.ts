@@ -11,8 +11,10 @@ export class FetchSvgComponent extends BaseComponent<'div'> {
   }
 
   private async render(name: string): Promise<void> {
-    const svg = await fetch(`${SVG_PATH}/${name}.svg`);
-    this.svgText = await svg.text();
-    this.node.innerHTML = this.svgText;
+    try{
+      const svg = await fetch(`${SVG_PATH}/${name}.svg`);
+      this.svgText = await svg.text();
+      this.node.innerHTML = this.svgText;
+    } catch {}
   }
 }
