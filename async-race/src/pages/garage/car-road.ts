@@ -3,6 +3,7 @@ import type { Car } from '../../types/car';
 import BaseComponent from '../../components/base-component';
 import { EventEmitter } from '../../utils/event-emitter';
 import { CarComponent } from '../../components/car-component';
+import { FetchSvgComponent } from '../../components/FetchSvgComponent';
 
 export class CarRoad extends BaseComponent<'div'> {
   public delete = new EventEmitter<void>();
@@ -17,6 +18,10 @@ export class CarRoad extends BaseComponent<'div'> {
 
   constructor(private readonly car: Car) {
     super({ tag: 'div', className: 'car-road' });
+
+    const frontWheelSvg = new FetchSvgComponent('wheel', { className: 'front-wheel'});
+    const backWheelSvg = new FetchSvgComponent('wheel', { className: 'back-wheel'});
+    const carSvg = new FetchSvgComponent('car2', { className: 'car-image'});
 
     const roadContainer = new BaseComponent({
       className: 'road',
@@ -51,7 +56,7 @@ export class CarRoad extends BaseComponent<'div'> {
       className: 'car',
       parent: carContainer,
       color: car.color,
-    });
+    }, frontWheelSvg, backWheelSvg, carSvg);
 
     const carOptionsButtonsContainer = new BaseComponent({
       className: 'car-selector-btns-container',

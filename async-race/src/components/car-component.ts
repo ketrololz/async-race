@@ -15,14 +15,20 @@ export class CarComponent extends BaseComponent<'div'> {
   private backWheelSvg: FetchSvgComponent;
   private frontWheelSvg: FetchSvgComponent;
 
-  constructor(props: CarProps<'div'>) {
+  constructor(
+    props: CarProps<'div'>,
+    frontWheel: FetchSvgComponent,
+    backWheel: FetchSvgComponent,
+    carSvg: FetchSvgComponent,
+  ) {
     super({ tag: 'div', ...props });
     this.container = props.parent;
     this.node.style.color = props.color;
 
-    this.frontWheelSvg = new FetchSvgComponent('wheel', { className: 'front-wheel', parent: this });
-    this.backWheelSvg = new FetchSvgComponent('wheel', { className: 'back-wheel', parent: this });
-    new FetchSvgComponent('car2', { className: 'car-image', parent: this });
+    this.backWheelSvg = backWheel;
+    this.frontWheelSvg = frontWheel;
+
+    this.appendChildren(frontWheel, backWheel, carSvg);
   }
 
   public animateCar(timeInMs: number): void {
