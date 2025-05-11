@@ -1,0 +1,1 @@
+export const RGB_COLORS = 256 ** 3;

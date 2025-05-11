@@ -1,0 +1,66 @@
+@use '../../styles/colors';
+@use '../../styles//fonts';
+
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 600px;
+
+  color: colors.$white;
+}
+
+.title-table-container {
+  display: grid;
+  grid-template-columns: 2fr 3fr 7fr 2fr 3fr;
+  column-gap: 10px;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
+.winner-line {
+  display: grid;
+  grid-template-columns: 2fr 3fr 7fr 2fr 3fr;
+  column-gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.winners-container {
+  align-items: center;
+  width: 100%;
+}
+
+.table-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.table-title-btn {
+  margin: 0;
+  padding: 0;
+  border: none;
+
+  font-family: Atma;
+  font-size: 16px;
+  font-weight: 600;
+  color: colors.$white;
+  text-align: left;
+
+  background: none;
+  outline: none;
+}

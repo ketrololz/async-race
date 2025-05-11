@@ -1,0 +1,27 @@
+:root {
+  --background: #74C258;
+  --grey: #555555;
+  --dark-grey: #272121;
+  --dark-grey-border: #483A3A;
+  --white: #fff;
+  --red: #910D0D;
+  --light-red: #FBA3A3;
+  --light-red-darken: #9D4B4B;
+  --dark-red: #860B0B;
+  --yellow: #F5DC4A;
+  --brown: #260C0C;
+  --brown-70: rgb(38 12 12 / 70%);
+}
+
+$grey: var(--grey);
+$dark-grey: var(--dark-grey);
+$dark-grey-border: var(--dark-grey-border);
+$white: var(--white);
+$red: var(--red);
+$light-red: var( --light-red);
+$light-red-darken: var( --light-red-darken);
+$background: var(--background);
+$dark-red: var(--dark-red);
+$yellow: var(--yellow);
+$brown: var(--brown);
+$brown-70: var(--brown-70);

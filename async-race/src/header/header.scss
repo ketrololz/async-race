@@ -1,0 +1,23 @@
+@use '../styles/colors';
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+
+  margin: 20px 0 40px;
+}
+
+.header-buttons-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.h1 {
+  font-size: 30px;
+  font-weight: 700;
+  color: colors.$white;
+  text-align: center;
+}
